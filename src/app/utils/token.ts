@@ -3,7 +3,7 @@ import { jwtUtils } from "./jwt";
 
 import { Response } from "express";
 import { cookieUtils } from "./cookie";
-import { envVars } from "../app/config/env";
+import { envVars } from "../config/env";
 
 // creating access token
 const getAccessToken = (payload: JwtPayload) => {

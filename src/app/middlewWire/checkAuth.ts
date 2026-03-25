@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import status from "http-status";
-
-import { cookieUtils } from "../../utils/cookie";
-import AppError from "../errorHelper/AppError";
 import { OrgRole, UserStatus } from "../../generated/prisma/enums";
+import { cookieUtils } from "../utils/cookie";
+import AppError from "../errorHelper/AppError";
 import { prisma } from "../lib/prisma";
 
 export const checkAuth =

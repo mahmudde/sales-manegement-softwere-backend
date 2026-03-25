@@ -6,6 +6,7 @@ import { staffRoutes } from "../modules/staff/staff.route";
 import { categoryRoutes } from "../modules/category/category.route";
 import { productRoutes } from "../modules/product/product.route";
 import { storageRoutes } from "../modules/storage/storage.route";
+import { inventoryRoutes } from "../modules/inventory/inventory.route";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/staff", staffRoutes);
 router.use("/categories", categoryRoutes);
 router.use("/products", productRoutes);
 router.use("/storages", storageRoutes);
+router.use("/inventory", inventoryRoutes);
 
 export const indexRoutes = router;

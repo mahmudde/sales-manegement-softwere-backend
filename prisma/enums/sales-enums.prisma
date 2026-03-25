@@ -1,0 +1,11 @@
+enum SalePaymentMethod {
+  CASH
+  CARD
+  OTHER
+}
+
+enum SaleStatus {
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}

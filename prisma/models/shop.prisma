@@ -1,0 +1,44 @@
+model Shop {
+  id             String     @id @default(cuid())
+  organizationId String
+  name           String
+  slug           String
+  email          String?
+  phone          String?
+  address        String?
+  image          String?
+  status         ShopStatus @default(ACTIVE)
+  isDeleted      Boolean    @default(false)
+  deletedAt      DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  organization  Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignments   ShopAssignment[]
+  storages      Storage[]
+  inventories   Inventory[]
+  inventoryTxns InventoryTransaction[]
+  sales         Sale[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+}
+
+model ShopAssignment {
+  id             String   @id @default(cuid())
+  organizationId String
+  shopId         String
+  userId         String
+  isActive       Boolean  @default(true)
+  assignedAt     DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  shop         Shop         @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([shopId, userId])
+  @@index([organizationId])
+  @@index([userId])
+}

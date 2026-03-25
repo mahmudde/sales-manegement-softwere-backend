@@ -1,0 +1,63 @@
+model BillingPlan {
+  id             String          @id @default(cuid())
+  organizationId String?
+  name           String
+  slug           String          @unique
+  description    String?
+  amount         Decimal         @db.Decimal(10, 2)
+  currency       String          @default("usd")
+  interval       BillingInterval
+  isActive       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  organization  Organization?              @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  subscriptions OrganizationSubscription[]
+
+  @@index([organizationId])
+}
+
+model OrganizationSubscription {
+  id                   String             @id @default(cuid())
+  organizationId       String
+  billingPlanId        String
+  status               SubscriptionStatus @default(INACTIVE)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  startsAt             DateTime?
+  endsAt               DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  organization Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  billingPlan  BillingPlan          @relation(fields: [billingPlanId], references: [id], onDelete: Restrict)
+  payments     PaymentTransaction[]
+
+  @@index([organizationId])
+  @@index([billingPlanId])
+  @@index([stripeCustomerId])
+  @@index([stripeSubscriptionId])
+}
+
+model PaymentTransaction {
+  id                    String        @id @default(cuid())
+  organizationId        String
+  subscriptionId        String?
+  createdById           String?
+  amount                Decimal       @db.Decimal(10, 2)
+  currency              String        @default("usd")
+  status                PaymentStatus @default(PENDING)
+  stripePaymentIntentId String?       @unique
+  stripeClientSecret    String?
+  note                  String?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  organization Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  subscription OrganizationSubscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  createdBy    User?                     @relation("PaymentCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, createdAt])
+  @@index([subscriptionId])
+  @@index([createdById])
+}

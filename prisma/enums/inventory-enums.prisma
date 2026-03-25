@@ -1,0 +1,6 @@
+enum InventoryTransactionType {
+  STOCK_IN
+  STOCK_OUT
+  SALE
+  ADJUSTMENT
+}

@@ -1,0 +1,41 @@
+model Sale {
+  id             String            @id @default(cuid())
+  organizationId String
+  shopId         String
+  createdById    String
+  invoiceNo      String
+  subtotal       Decimal           @db.Decimal(10, 2)
+  discount       Decimal           @default(0) @db.Decimal(10, 2)
+  total          Decimal           @db.Decimal(10, 2)
+  paymentMethod  SalePaymentMethod
+  status         SaleStatus        @default(COMPLETED)
+  note           String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  organization  Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  shop          Shop                   @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  createdBy     User                   @relation("SaleCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  items         SaleItem[]
+  inventoryTxns InventoryTransaction[]
+
+  @@unique([organizationId, invoiceNo])
+  @@index([organizationId, shopId, createdAt])
+  @@index([createdById])
+}
+
+model SaleItem {
+  id         String   @id @default(cuid())
+  saleId     String
+  productId  String
+  quantity   Int
+  unitPrice  Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal  @db.Decimal(10, 2)
+  createdAt  DateTime @default(now())
+
+  sale    Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([saleId])
+  @@index([productId])
+}

@@ -1,0 +1,67 @@
+model Storage {
+  id             String        @id @default(cuid())
+  organizationId String
+  shopId         String
+  name           String
+  description    String?
+  status         StorageStatus @default(ACTIVE)
+  isDeleted      Boolean       @default(false)
+  deletedAt      DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  organization  Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  shop          Shop                   @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  inventories   Inventory[]
+  inventoryTxns InventoryTransaction[]
+
+  @@unique([shopId, name])
+  @@index([organizationId, shopId])
+}
+
+model Inventory {
+  id                String   @id @default(cuid())
+  organizationId    String
+  shopId            String
+  storageId         String
+  productId         String
+  quantity          Int      @default(0)
+  lowStockThreshold Int      @default(5)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  shop         Shop         @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  storage      Storage      @relation(fields: [storageId], references: [id], onDelete: Cascade)
+  product      Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([shopId, storageId, productId])
+  @@index([organizationId, shopId])
+  @@index([productId])
+}
+
+model InventoryTransaction {
+  id             String                   @id @default(cuid())
+  organizationId String
+  shopId         String
+  storageId      String
+  productId      String
+  createdById    String
+  type           InventoryTransactionType
+  quantity       Int
+  note           String?
+  saleId         String?
+  createdAt      DateTime                 @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  shop         Shop         @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  storage      Storage      @relation(fields: [storageId], references: [id], onDelete: Cascade)
+  product      Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdBy    User         @relation("InventoryTxnCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  sale         Sale?        @relation(fields: [saleId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, shopId, createdAt])
+  @@index([productId, createdAt])
+  @@index([createdById])
+  @@index([saleId])
+}

@@ -1,0 +1,39 @@
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum OrganizationStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum OrgRole {
+  ORG_SUPER_ADMIN
+  ORG_ADMIN
+  SHOP_ADMIN
+  STAFF
+}
+
+enum ShopStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum CategoryStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  OUT_OF_STOCK
+}
+
+enum StorageStatus {
+  ACTIVE
+  INACTIVE
+}

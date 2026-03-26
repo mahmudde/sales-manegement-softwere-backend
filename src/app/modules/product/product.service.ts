@@ -9,6 +9,13 @@ import {
 } from "./product.interface";
 import { prisma } from "../../lib/prisma";
 import { Prisma, ProductStatus } from "../../../generated/prisma/client";
+import { IQueryParams } from "../../interfaces/query.interface";
+import { QueryBuilder } from "../../builder/QueryBuilder";
+import {
+  productFilterableFields,
+  productSearchableFields,
+  productSortableFields,
+} from "./product.constant";
 
 const generateSlug = (value: string) =>
   value
@@ -94,21 +101,32 @@ const createProduct = async (
   return product;
 };
 
-const getAllProducts = async (user: IRequestUser) => {
-  const products = await prisma.product.findMany({
-    where: {
-      organizationId: user.organizationId,
-      isDeleted: false,
-    },
-    include: {
-      category: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
+const getAllProducts = async (user: IRequestUser, query: IQueryParams) => {
+  const queryBuilder = new QueryBuilder(prisma.product, query, {
+    searchableFields: productSearchableFields,
+    filterableFields: productFilterableFields,
+    sortableFields: productSortableFields,
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
   });
 
-  return products;
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .include({
+      category: true,
+    })
+    .where({
+      organizationId: user.organizationId,
+      isDeleted: false,
+    })
+    .execute();
+
+  return result;
 };
 
 const getSingleProduct = async (user: IRequestUser, productId: string) => {

@@ -47,13 +47,14 @@ const getAllInventory = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const result = await inventoryService.getAllInventory(user);
+  const result = await inventoryService.getAllInventory(user, req.query);
 
   sendResponse(res, {
     httpStatusCode: status.OK,
     success: true,
     message: "Inventories fetched successfully",
     data: result,
+    meta: result.meta,
   });
 });
 
@@ -85,13 +86,17 @@ const getInventoryTransactions = catchAsync(
       throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
     }
 
-    const result = await inventoryService.getInventoryTransactions(user);
+    const result = await inventoryService.getInventoryTransactions(
+      user,
+      req.query,
+    );
 
     sendResponse(res, {
       httpStatusCode: status.OK,
       success: true,
       message: "Inventory transactions fetched successfully",
       data: result,
+      meta: result.meta,
     });
   },
 );

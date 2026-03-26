@@ -30,13 +30,14 @@ const getAllProducts = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const result = await productService.getAllProducts(user);
+  const result = await productService.getAllProducts(user, req.query);
 
   sendResponse(res, {
     httpStatusCode: status.OK,
     success: true,
     message: "Products fetched successfully",
-    data: result,
+    data: result.data,
+    meta: result.meta,
   });
 });
 

@@ -8,6 +8,13 @@ import {
   InventoryTransactionType,
   Prisma,
 } from "../../../generated/prisma/client";
+import {
+  saleFilterableFields,
+  saleSearchableFields,
+  saleSortableFields,
+} from "./sale.constant";
+import { QueryBuilder } from "../../builder/QueryBuilder";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 const generateInvoiceNo = async (organizationId: string) => {
   const count = await prisma.sale.count({
@@ -237,12 +244,23 @@ const createSale = async (user: IRequestUser, payload: ICreateSalePayload) => {
   return saleWithDetails;
 };
 
-const getAllSales = async (user: IRequestUser) => {
-  const sales = await prisma.sale.findMany({
-    where: {
-      organizationId: user.organizationId,
-    },
-    include: {
+const getAllSales = async (user: IRequestUser, query: IQueryParams) => {
+  const queryBuilder = new QueryBuilder(prisma.sale, query, {
+    searchableFields: saleSearchableFields,
+    filterableFields: saleFilterableFields,
+    sortableFields: saleSortableFields,
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
+  });
+
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .include({
       shop: true,
       createdBy: true,
       items: {
@@ -250,15 +268,14 @@ const getAllSales = async (user: IRequestUser) => {
           product: true,
         },
       },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+    })
+    .where({
+      organizationId: user.organizationId,
+    })
+    .execute();
 
-  return sales;
+  return result;
 };
-
 const getSingleSale = async (user: IRequestUser, saleId: string) => {
   const sale = await prisma.sale.findFirst({
     where: {

@@ -7,6 +7,16 @@ import {
   InventoryTransactionType,
   Prisma,
 } from "../../../generated/prisma/client";
+import {
+  inventoryFilterableFields,
+  inventorySearchableFields,
+  inventorySortableFields,
+  inventoryTransactionFilterableFields,
+  inventoryTransactionSearchableFields,
+  inventoryTransactionSortableFields,
+} from "./inventory.constant";
+import { QueryBuilder } from "../../builder/QueryBuilder";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 const validateInventoryReferences = async (
   organizationId: string,
@@ -192,12 +202,23 @@ const stockOut = async (user: IRequestUser, payload: IStockOutPayload) => {
   return result;
 };
 
-const getAllInventory = async (user: IRequestUser) => {
-  const inventories = await prisma.inventory.findMany({
-    where: {
-      organizationId: user.organizationId,
-    },
-    include: {
+const getAllInventory = async (user: IRequestUser, query: IQueryParams) => {
+  const queryBuilder = new QueryBuilder(prisma.inventory, query, {
+    searchableFields: inventorySearchableFields,
+    filterableFields: inventoryFilterableFields,
+    sortableFields: inventorySortableFields,
+    defaultSortBy: "updatedAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
+  });
+
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .include({
       shop: true,
       storage: true,
       product: {
@@ -205,13 +226,13 @@ const getAllInventory = async (user: IRequestUser) => {
           category: true,
         },
       },
-    },
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
+    })
+    .where({
+      organizationId: user.organizationId,
+    })
+    .execute();
 
-  return inventories;
+  return result;
 };
 
 const getSingleInventory = async (user: IRequestUser, inventoryId: string) => {
@@ -238,12 +259,26 @@ const getSingleInventory = async (user: IRequestUser, inventoryId: string) => {
   return inventory;
 };
 
-const getInventoryTransactions = async (user: IRequestUser) => {
-  const transactions = await prisma.inventoryTransaction.findMany({
-    where: {
-      organizationId: user.organizationId,
-    },
-    include: {
+const getInventoryTransactions = async (
+  user: IRequestUser,
+  query: IQueryParams,
+) => {
+  const queryBuilder = new QueryBuilder(prisma.inventoryTransaction, query, {
+    searchableFields: inventoryTransactionSearchableFields,
+    filterableFields: inventoryTransactionFilterableFields,
+    sortableFields: inventoryTransactionSortableFields,
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
+  });
+
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .include({
       shop: true,
       storage: true,
       product: {
@@ -252,13 +287,13 @@ const getInventoryTransactions = async (user: IRequestUser) => {
         },
       },
       createdBy: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+    })
+    .where({
+      organizationId: user.organizationId,
+    })
+    .execute();
 
-  return transactions;
+  return result;
 };
 
 export const inventoryService = {

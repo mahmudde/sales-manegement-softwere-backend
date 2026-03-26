@@ -30,13 +30,14 @@ const getAllStaff = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const result = await staffService.getAllStaff(user);
+  const result = await staffService.getAllStaff(user, req.query);
 
   sendResponse(res, {
     httpStatusCode: status.OK,
     success: true,
     message: "Staffs fetched successfully",
     data: result,
+    meta: result.meta,
   });
 });
 

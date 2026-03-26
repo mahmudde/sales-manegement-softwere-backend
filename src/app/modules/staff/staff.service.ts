@@ -11,6 +11,13 @@ import {
 import { OrgRole, UserStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { Prisma } from "../../../generated/prisma/client";
+import {
+  staffFilterableFields,
+  staffSearchableFields,
+  staffSortableFields,
+} from "./staff.constant";
+import { QueryBuilder } from "../../builder/QueryBuilder";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 const createStaff = async (
   user: IRequestUser,
@@ -119,24 +126,35 @@ const createStaff = async (
   }
 };
 
-const getAllStaff = async (user: IRequestUser) => {
-  const staffs = await prisma.organizationMember.findMany({
-    where: {
+const getAllStaff = async (user: IRequestUser, query: IQueryParams) => {
+  const queryBuilder = new QueryBuilder(prisma.organizationMember, query, {
+    searchableFields: staffSearchableFields,
+    filterableFields: staffFilterableFields,
+    sortableFields: staffSortableFields,
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
+  });
+
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .include({
+      user: true,
+      organization: true,
+    })
+    .where({
       organizationId: user.organizationId,
       user: {
         isDeleted: false,
       },
-    },
-    include: {
-      user: true,
-      organization: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+    })
+    .execute();
 
-  return staffs;
+  return result;
 };
 
 const getSingleStaff = async (user: IRequestUser, staffId: string) => {

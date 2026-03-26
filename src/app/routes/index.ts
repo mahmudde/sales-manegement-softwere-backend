@@ -8,6 +8,7 @@ import { productRoutes } from "../modules/product/product.route";
 import { storageRoutes } from "../modules/storage/storage.route";
 import { inventoryRoutes } from "../modules/inventory/inventory.route";
 import { saleRoutes } from "../modules/sale/sale.route";
+import { billingRoutes } from "../modules/billing/billing.route";
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use("/products", productRoutes);
 router.use("/storages", storageRoutes);
 router.use("/inventory", inventoryRoutes);
 router.use("/sales", saleRoutes);
+router.use("/billing", billingRoutes);
 
 export const indexRoutes = router;

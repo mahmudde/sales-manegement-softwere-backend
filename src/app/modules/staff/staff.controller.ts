@@ -36,8 +36,8 @@ const getAllStaff = catchAsync(async (req: Request, res: Response) => {
     httpStatusCode: status.OK,
     success: true,
     message: "Staffs fetched successfully",
-    data: result,
     meta: result.meta,
+    data: result.data,
   });
 });
 

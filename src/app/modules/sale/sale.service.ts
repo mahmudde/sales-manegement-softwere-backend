@@ -276,6 +276,7 @@ const getAllSales = async (user: IRequestUser, query: IQueryParams) => {
 
   return result;
 };
+
 const getSingleSale = async (user: IRequestUser, saleId: string) => {
   const sale = await prisma.sale.findFirst({
     where: {

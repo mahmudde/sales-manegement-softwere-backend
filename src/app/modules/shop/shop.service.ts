@@ -8,6 +8,13 @@ import {
 } from "./shop.interface";
 import { prisma } from "../../lib/prisma";
 import { ShopStatus } from "../../../generated/prisma/enums";
+import {
+  shopFilterableFields,
+  shopSearchableFields,
+  shopSortableFields,
+} from "./shop.constant";
+import { QueryBuilder } from "../../builder/QueryBuilder";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 const generateSlug = (value: string) =>
   value
@@ -60,18 +67,29 @@ const createShop = async (user: IRequestUser, payload: ICreateShopPayload) => {
   return shop;
 };
 
-const getAllShops = async (user: IRequestUser) => {
-  const shops = await prisma.shop.findMany({
-    where: {
-      organizationId: user.organizationId,
-      isDeleted: false,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
+const getAllShops = async (user: IRequestUser, query: IQueryParams) => {
+  const queryBuilder = new QueryBuilder(prisma.shop, query, {
+    searchableFields: shopSearchableFields,
+    filterableFields: shopFilterableFields,
+    sortableFields: shopSortableFields,
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
   });
 
-  return shops;
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .where({
+      organizationId: user.organizationId,
+      isDeleted: false,
+    })
+    .execute();
+
+  return result;
 };
 
 const getSingleShop = async (user: IRequestUser, shopId: string) => {

@@ -36,8 +36,8 @@ const getAllSales = catchAsync(async (req: Request, res: Response) => {
     httpStatusCode: status.OK,
     success: true,
     message: "Sales fetched successfully",
-    data: result,
     meta: result.meta,
+    data: result.data,
   });
 });
 

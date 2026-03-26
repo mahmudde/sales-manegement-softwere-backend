@@ -13,7 +13,8 @@ export const saleFilterableFields = [
 
 export const saleSortableFields = [
   "createdAt",
-  "total",
   "subtotal",
+  "discount",
+  "total",
   "invoiceNo",
 ];

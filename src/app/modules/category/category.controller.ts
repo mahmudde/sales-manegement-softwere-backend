@@ -30,13 +30,14 @@ const getAllCategories = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const result = await categoryService.getAllCategories(user);
+  const result = await categoryService.getAllCategories(user, req.query);
 
   sendResponse(res, {
     httpStatusCode: status.OK,
     success: true,
     message: "Categories fetched successfully",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 

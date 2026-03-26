@@ -8,6 +8,13 @@ import {
 } from "./category.interface";
 import { prisma } from "../../lib/prisma";
 import { CategoryStatus } from "../../../generated/prisma/enums";
+import {
+  categoryFilterableFields,
+  categorySearchableFields,
+  categorySortableFields,
+} from "./category.constant";
+import { QueryBuilder } from "../../builder/QueryBuilder";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 const generateSlug = (value: string) =>
   value
@@ -78,18 +85,29 @@ const createCategory = async (
   return category;
 };
 
-const getAllCategories = async (user: IRequestUser) => {
-  const categories = await prisma.category.findMany({
-    where: {
-      organizationId: user.organizationId,
-      isDeleted: false,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
+const getAllCategories = async (user: IRequestUser, query: IQueryParams) => {
+  const queryBuilder = new QueryBuilder(prisma.category, query, {
+    searchableFields: categorySearchableFields,
+    filterableFields: categoryFilterableFields,
+    sortableFields: categorySortableFields,
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
   });
 
-  return categories;
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .where({
+      organizationId: user.organizationId,
+      isDeleted: false,
+    })
+    .execute();
+
+  return result;
 };
 
 const getSingleCategory = async (user: IRequestUser, categoryId: string) => {

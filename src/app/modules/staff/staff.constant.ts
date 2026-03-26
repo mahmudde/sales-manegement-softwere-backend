@@ -1,9 +1,5 @@
-export const staffSearchableFields = [
-  "user.name",
-  "user.email",
-  "shopAssignments.shop.name",
-];
+export const staffSearchableFields = ["user.name", "user.email"];
 
 export const staffFilterableFields = ["role", "isActive", "user.status"];
 
-export const staffSortableFields = ["createdAt", "role", "joinedAt"];
+export const staffSortableFields = ["createdAt", "joinedAt", "role"];

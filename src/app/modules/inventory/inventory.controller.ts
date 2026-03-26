@@ -53,8 +53,8 @@ const getAllInventory = catchAsync(async (req: Request, res: Response) => {
     httpStatusCode: status.OK,
     success: true,
     message: "Inventories fetched successfully",
-    data: result,
     meta: result.meta,
+    data: result.data,
   });
 });
 
@@ -95,8 +95,8 @@ const getInventoryTransactions = catchAsync(
       httpStatusCode: status.OK,
       success: true,
       message: "Inventory transactions fetched successfully",
-      data: result,
       meta: result.meta,
+      data: result.data,
     });
   },
 );

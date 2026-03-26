@@ -9,6 +9,13 @@ import {
 } from "./storage.interface";
 import { prisma } from "../../lib/prisma";
 import { StorageStatus } from "../../../generated/prisma/enums";
+import {
+  storageFilterableFields,
+  storageSearchableFields,
+  storageSortableFields,
+} from "./storage.constant";
+import { QueryBuilder } from "../../builder/QueryBuilder";
+import { IQueryParams } from "../../interfaces/query.interface";
 
 const createStorage = async (
   user: IRequestUser,
@@ -56,21 +63,32 @@ const createStorage = async (
   return storage;
 };
 
-const getAllStorages = async (user: IRequestUser) => {
-  const storages = await prisma.storage.findMany({
-    where: {
-      organizationId: user.organizationId,
-      isDeleted: false,
-    },
-    include: {
-      shop: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
+const getAllStorages = async (user: IRequestUser, query: IQueryParams) => {
+  const queryBuilder = new QueryBuilder(prisma.storage, query, {
+    searchableFields: storageSearchableFields,
+    filterableFields: storageFilterableFields,
+    sortableFields: storageSortableFields,
+    defaultSortBy: "createdAt",
+    defaultSortOrder: "desc",
+    defaultLimit: 10,
+    maxLimit: 100,
   });
 
-  return storages;
+  const result = await queryBuilder
+    .search()
+    .filter()
+    .sort()
+    .paginate()
+    .include({
+      shop: true,
+    })
+    .where({
+      organizationId: user.organizationId,
+      isDeleted: false,
+    })
+    .execute();
+
+  return result;
 };
 
 const getSingleStorage = async (user: IRequestUser, storageId: string) => {

@@ -1,8 +1,10 @@
 import express, { Application, Request, Response } from "express";
-import { indexRoutes } from "./app/routes";
 import cookieParser from "cookie-parser";
-import { envVars } from "./app/config/env";
 import cors from "cors";
+
+import { envVars } from "./app/config/env";
+import { indexRoutes } from "./app/routes";
+import { billingController } from "./app/modules/billing/billing.controller";
 
 export const app: Application = express();
 
@@ -20,11 +22,19 @@ app.use(
   }),
 );
 
-// Enable URL-encoded form data parsing
+app.use(cookieParser());
+
+// Stripe webhook
+app.post(
+  "/api/v1/billing/webhook",
+  express.raw({ type: "application/json" }),
+  billingController.stripeWebhook,
+);
+
+// data parsing
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware to parse JSON bodies
-app.use(cookieParser());
+//parse JSON bodies
 app.use(express.json());
 
 app.use("/api/v1", indexRoutes);

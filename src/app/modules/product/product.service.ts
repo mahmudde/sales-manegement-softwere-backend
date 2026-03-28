@@ -16,6 +16,7 @@ import {
   productSearchableFields,
   productSortableFields,
 } from "./product.constant";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 const generateSlug = (value: string) =>
   value
@@ -53,6 +54,7 @@ const generateUniqueProductSlug = async (
 const createProduct = async (
   user: IRequestUser,
   payload: ICreateProductPayload,
+  file?: Express.Multer.File,
 ) => {
   const category = await prisma.category.findFirst({
     where: {
@@ -82,6 +84,19 @@ const createProduct = async (
     payload.name,
   );
 
+  const uploadedFile = file as Express.Multer.File & {
+    path?: string;
+    filename?: string;
+  };
+
+  console.log("service file =>", uploadedFile);
+
+  const imageUrl = uploadedFile?.path ?? null;
+
+  console.log("from product service", imageUrl);
+
+  console.log("imageUrl =>", imageUrl);
+
   const product = await prisma.product.create({
     data: {
       organizationId: user.organizationId,
@@ -90,7 +105,7 @@ const createProduct = async (
       slug,
       sku: payload.sku,
       description: payload.description,
-      image: payload.image,
+      image: imageUrl,
       price: new Prisma.Decimal(payload.price),
     },
     include: {
@@ -152,6 +167,7 @@ const updateProduct = async (
   user: IRequestUser,
   productId: string,
   payload: IUpdateProductPayload,
+  file?: Express.Multer.File,
 ) => {
   const existingProduct = await prisma.product.findFirst({
     where: {
@@ -168,7 +184,7 @@ const updateProduct = async (
     throw new AppError(status.NOT_FOUND, "Product not found");
   }
 
-  const hasAnyUpdateField = Object.keys(payload).length > 0;
+  const hasAnyUpdateField = Object.keys(payload).length > 0 || !!file;
 
   if (!hasAnyUpdateField) {
     throw new AppError(status.BAD_REQUEST, "No update data provided");
@@ -213,6 +229,8 @@ const updateProduct = async (
     slug = await generateUniqueProductSlug(user.organizationId, payload.name);
   }
 
+  const newImageUrl = file?.path ?? existingProduct.image ?? undefined;
+
   const updatedProduct = await prisma.product.update({
     where: {
       id: existingProduct.id,
@@ -222,7 +240,7 @@ const updateProduct = async (
       categoryId: payload.categoryId,
       sku: payload.sku,
       description: payload.description,
-      image: payload.image,
+      image: newImageUrl,
       slug,
       ...(payload.price !== undefined && {
         price: new Prisma.Decimal(payload.price),
@@ -232,6 +250,14 @@ const updateProduct = async (
       category: true,
     },
   });
+
+  if (
+    file?.path &&
+    existingProduct.image &&
+    existingProduct.image !== file.path
+  ) {
+    await deleteFileFromCloudinary(existingProduct.image);
+  }
 
   return updatedProduct;
 };

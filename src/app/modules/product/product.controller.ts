@@ -13,7 +13,14 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const result = await productService.createProduct(user, req.body);
+  console.log("controller req.file =>", req.file);
+  console.log("content-type =>", req.headers);
+
+  const result = await productService.createProduct(
+    user,
+    req.body,
+    req.file as Express.Multer.File | undefined,
+  );
 
   sendResponse(res, {
     httpStatusCode: status.CREATED,
@@ -72,6 +79,7 @@ const updateProduct = catchAsync(async (req: Request, res: Response) => {
     user,
     req.params.id as string,
     req.body,
+    req.file,
   );
 
   sendResponse(res, {

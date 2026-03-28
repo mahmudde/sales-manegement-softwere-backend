@@ -6,6 +6,7 @@ import { envVars } from "../config/env";
 import { TErrorResponse, TerrorSources } from "../interfaces/error.interface";
 import { handleZodError } from "../errorHelper/handleZoderror";
 import AppError from "../errorHelper/AppError";
+import { deleteFileFromCloudinary } from "../config/cloudinary.config";
 
 export const globalErrorHandler = async (
   err: unknown,
@@ -16,6 +17,23 @@ export const globalErrorHandler = async (
 ) => {
   if (envVars.NODE_ENV === "development") {
     console.error(err);
+  }
+  try {
+    if (req.file && "path" in req.file && req.file.path) {
+      await deleteFileFromCloudinary(req.file.path);
+    }
+
+    if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+      const imageUrls = req.files
+        .filter((file) => "path" in file && file.path)
+        .map((file) => file.path);
+
+      await Promise.all(imageUrls.map((url) => deleteFileFromCloudinary(url)));
+    }
+  } catch (cleanupError) {
+    if (envVars.NODE_ENV === "development") {
+      console.error("Cloudinary cleanup failed:", cleanupError);
+    }
   }
 
   let errorSources: TerrorSources[] = [];

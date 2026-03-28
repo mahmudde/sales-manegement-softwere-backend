@@ -10,12 +10,14 @@ import {
 } from "./product.validation";
 import { OrgRole } from "../../../generated/prisma/enums";
 import { validateRequest } from "../../middlewWire/validateRequest";
+import { multerUpload } from "../../config/multer.config";
 
 const router = Router();
 
 router.post(
   "/",
   checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  multerUpload.single("image"),
   validateRequest(createProductValidationSchema),
   productController.createProduct,
 );
@@ -35,6 +37,7 @@ router.get(
 router.patch(
   "/:id",
   checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  multerUpload.single("image"),
   validateRequest(updateProductValidationSchema),
   productController.updateProduct,
 );

@@ -1,13 +1,15 @@
 import { Router } from "express";
 import { authController } from "./auth.controller";
+import { checkAuth } from "../../middlewWire/checkAuth";
 
 import {
   changePasswordValidationSchema,
+  forgotPasswordValidationSchema,
   loginUserValidationSchema,
   registerUserValidationSchema,
+  resetPasswordValidationSchema,
 } from "./auth.validation";
 import { validateRequest } from "../../middlewWire/validateRequest";
-import { checkAuth } from "../../middlewWire/checkAuth";
 import { OrgRole } from "../../../generated/prisma/enums";
 
 const router = Router();
@@ -39,11 +41,37 @@ router.post("/refresh-token", authController.getNewToken);
 
 router.post(
   "/change-password",
-  checkAuth(),
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
   validateRequest(changePasswordValidationSchema),
   authController.changePassword,
 );
 
-router.post("/logout", checkAuth(), authController.logOutUser);
+router.post(
+  "/logout",
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
+  authController.logOutUser,
+);
 
-export const authRouts = router;
+router.post(
+  "/forgot-password",
+  validateRequest(forgotPasswordValidationSchema),
+  authController.forgotPassword,
+);
+
+router.post(
+  "/reset-password",
+  validateRequest(resetPasswordValidationSchema),
+  authController.resetPassword,
+);
+
+export const authRoutes = router;

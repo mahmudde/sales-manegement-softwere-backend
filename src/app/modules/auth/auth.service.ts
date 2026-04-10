@@ -7,9 +7,11 @@ import { jwtUtils } from "../../utils/jwt";
 import { envVars } from "../../config/env";
 import {
   IChangePasswordPayload,
+  IForgotPasswordPayload,
   ILoginUserPayload,
   IRegisterUserPayload,
   IRequestUser,
+  IResetPasswordPayload,
 } from "./auth.interface";
 import { prisma } from "../../lib/prisma";
 import { OrgRole, UserStatus } from "../../../generated/prisma/enums";
@@ -184,6 +186,24 @@ const registerUser = async (payload: IRegisterUserPayload) => {
 const loginUser = async (payload: ILoginUserPayload) => {
   const { email, password } = payload;
 
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user || user.isDeleted) {
+    throw new AppError(status.NOT_FOUND, "User not found");
+  }
+
+  if (user.status === UserStatus.INACTIVE) {
+    throw new AppError(status.FORBIDDEN, "User is inactive");
+  }
+
+  if (user.status === UserStatus.SUSPENDED) {
+    throw new AppError(status.FORBIDDEN, "User is suspended");
+  }
+
   const data = await auth.api.signInEmail({
     body: {
       email,
@@ -338,6 +358,67 @@ const logOutUser = async (sessionToken: string) => {
   return result;
 };
 
+const forgotPassword = async (payload: IForgotPasswordPayload) => {
+  const { email } = payload;
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  // Prevent email enumeration
+  if (!user || user.isDeleted) {
+    return null;
+  }
+
+  if (user.status === UserStatus.SUSPENDED) {
+    return null;
+  }
+
+  if (user.status === UserStatus.INACTIVE) {
+    return null;
+  }
+
+  const result = await auth.api.requestPasswordResetEmailOTP({
+    body: {
+      email,
+    },
+  });
+
+  return result;
+};
+
+const resetPassword = async (payload: IResetPasswordPayload) => {
+  const { email, otp, newPassword } = payload;
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user || user.isDeleted) {
+    throw new AppError(status.NOT_FOUND, "User not found");
+  }
+
+  if (user.status === UserStatus.INACTIVE) {
+    throw new AppError(status.FORBIDDEN, "User is inactive");
+  }
+
+  if (user.status === UserStatus.SUSPENDED) {
+    throw new AppError(status.FORBIDDEN, "User is suspended");
+  }
+
+  const result = await auth.api.resetPasswordEmailOTP({
+    body: {
+      email,
+      otp,
+      password: newPassword,
+    },
+  });
+
+  return result;
+};
+
 export const authService = {
   registerUser,
   loginUser,
@@ -345,4 +426,6 @@ export const authService = {
   getNewToken,
   changePassword,
   logOutUser,
+  forgotPassword,
+  resetPassword,
 };

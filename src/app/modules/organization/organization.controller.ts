@@ -30,8 +30,11 @@ const updateMyOrganization = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const payload = req.body;
-  const result = await organizationService.updateMyOrganization(user, payload);
+  const result = await organizationService.updateMyOrganization(
+    user,
+    req.body,
+    req.file as Express.Multer.File | undefined,
+  );
 
   sendResponse(res, {
     httpStatusCode: status.OK,

@@ -19,8 +19,6 @@ export const createProductValidationSchema = z.object({
     .max(500, "Description cannot exceed 500 characters")
     .optional(),
 
-  image: z.url("Image must be a valid URL").optional(),
-
   price: z
     .number({ error: "Price must be a number" })
     .positive("Price must be greater than 0"),

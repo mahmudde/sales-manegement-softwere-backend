@@ -18,10 +18,12 @@ import {
 } from "./staff.constant";
 import { QueryBuilder } from "../../builder/QueryBuilder";
 import { IQueryParams } from "../../interfaces/query.interface";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 const createStaff = async (
   user: IRequestUser,
   payload: ICreateStaffPayload,
+  file?: Express.Multer.File,
 ) => {
   const { name, email, password, phone, shopId, role } = payload;
 
@@ -53,6 +55,13 @@ const createStaff = async (
   if (!shop) {
     throw new AppError(status.NOT_FOUND, "Shop not found");
   }
+
+  const uploadedFile = file as Express.Multer.File & {
+    path?: string;
+    secure_url?: string;
+  };
+
+  const imageUrl = uploadedFile?.path || uploadedFile?.secure_url || null;
 
   const authData = await auth.api.signUpEmail({
     body: {
@@ -90,6 +99,7 @@ const createStaff = async (
         },
         data: {
           phone,
+          image: imageUrl,
         },
       });
     });
@@ -197,6 +207,7 @@ const updateStaff = async (
   user: IRequestUser,
   staffId: string,
   payload: IUpdateStaffPayload,
+  file?: Express.Multer.File,
 ) => {
   const existingStaff = await prisma.user.findFirst({
     where: {
@@ -223,7 +234,7 @@ const updateStaff = async (
     throw new AppError(status.NOT_FOUND, "Staff not found");
   }
 
-  const hasAnyUpdateField = Object.keys(payload).length > 0;
+  const hasAnyUpdateField = Object.keys(payload).length > 0 || !!file;
 
   if (!hasAnyUpdateField) {
     throw new AppError(status.BAD_REQUEST, "No update data provided");
@@ -243,8 +254,19 @@ const updateStaff = async (
     }
   }
 
+  const uploadedFile = file as Express.Multer.File & {
+    path?: string;
+    secure_url?: string;
+  };
+
+  const imageUrl =
+    uploadedFile?.path ||
+    uploadedFile?.secure_url ||
+    existingStaff.image ||
+    undefined;
+
   await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-    if (payload.name || payload.phone || payload.image) {
+    if (payload.name || payload.phone || file) {
       await tx.user.update({
         where: {
           id: existingStaff.id,
@@ -252,7 +274,7 @@ const updateStaff = async (
         data: {
           name: payload.name,
           phone: payload.phone,
-          image: payload.image,
+          image: imageUrl,
         },
       });
     }
@@ -289,6 +311,10 @@ const updateStaff = async (
       });
     }
   });
+
+  if (file && existingStaff.image && existingStaff.image !== imageUrl) {
+    await deleteFileFromCloudinary(existingStaff.image);
+  }
 
   const updatedStaff = await prisma.user.findUnique({
     where: {

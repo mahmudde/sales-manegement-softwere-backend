@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Verify Your Email</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+      }
+      .logo {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: bold;
+        color: #2563eb;
+      }
+      .btn {
+        display: inline-block;
+        padding: 14px 24px;
+        margin-top: 20px;
+        background-color: #2563eb;
+        color: #ffffff !important;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+      }
+      .link-box {
+        word-break: break-all;
+        background: #f1f5f9;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 10px;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 12px;
+        color: #777;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="logo"><%= appName %></div>
+
+      <h2>Hello <%= name %>,</h2>
+
+      <p>Welcome to <strong><%= appName %></strong> 🎉</p>
+
+      <p>Please verify your email address to activate your account.</p>
+
+      <a href="<%= verificationUrl %>" class="btn"> Verify Email </a>
+
+      <p style="margin-top: 25px">If the button doesn’t work, use this link:</p>
+
+      <div class="link-box"><%= verificationUrl %></div>
+
+      <p style="margin-top: 20px">
+        This link may expire soon for security reasons.
+      </p>
+
+      <p>
+        If you didn’t create this account, you can safely ignore this email.
+      </p>
+
+      <div class="footer">
+        © <%= currentYear %> <%= appName %><br />
+        Need help? Contact support
+      </div>
+    </div>
+  </body>
+</html>

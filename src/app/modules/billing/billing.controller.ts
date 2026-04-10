@@ -60,6 +60,9 @@ const getBillingHistory = catchAsync(async (req: Request, res: Response) => {
 const stripeWebhook = async (req: Request, res: Response) => {
   const signature = req.headers["stripe-signature"];
 
+  console.log("stripe webhook hit");
+  console.log("stripe webhook signeture =>", req.headers["stripe-signature"]);
+
   if (!signature || typeof signature !== "string") {
     throw new AppError(status.BAD_REQUEST, "Stripe signature is missing");
   }

@@ -5,6 +5,7 @@ import { IRequestUser } from "../auth/auth.interface";
 import { IUpdateOrganizationPayload } from "./organization.interface";
 import { prisma } from "../../lib/prisma";
 import { OrganizationStatus } from "../../../generated/prisma/enums";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 const getMyOrganization = async (user: IRequestUser) => {
   const organization = await prisma.organization.findUnique({
@@ -49,6 +50,7 @@ const getMyOrganization = async (user: IRequestUser) => {
 const updateMyOrganization = async (
   user: IRequestUser,
   payload: IUpdateOrganizationPayload,
+  file?: Express.Multer.File,
 ) => {
   const existingOrganization = await prisma.organization.findUnique({
     where: {
@@ -67,11 +69,22 @@ const updateMyOrganization = async (
     );
   }
 
-  const hasAnyUpdateField = Object.keys(payload).length > 0;
+  const hasAnyUpdateField = Object.keys(payload).length > 0 || !!file;
 
   if (!hasAnyUpdateField) {
     throw new AppError(status.BAD_REQUEST, "No update data provided");
   }
+
+  const uploadedFile = file as Express.Multer.File & {
+    path?: string;
+    secure_url?: string;
+  };
+
+  const logoUrl =
+    uploadedFile?.path ||
+    uploadedFile?.secure_url ||
+    existingOrganization.logo ||
+    undefined;
 
   const updatedOrganization = await prisma.organization.update({
     where: {
@@ -79,8 +92,17 @@ const updateMyOrganization = async (
     },
     data: {
       ...payload,
+      logo: logoUrl,
     },
   });
+
+  if (
+    file &&
+    existingOrganization.logo &&
+    existingOrganization.logo !== logoUrl
+  ) {
+    await deleteFileFromCloudinary(existingOrganization.logo);
+  }
 
   return updatedOrganization;
 };

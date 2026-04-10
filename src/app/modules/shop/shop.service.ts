@@ -15,6 +15,7 @@ import {
 } from "./shop.constant";
 import { QueryBuilder } from "../../builder/QueryBuilder";
 import { IQueryParams } from "../../interfaces/query.interface";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 const generateSlug = (value: string) =>
   value
@@ -49,8 +50,19 @@ const generateUniqueShopSlug = async (
   }
 };
 
-const createShop = async (user: IRequestUser, payload: ICreateShopPayload) => {
+const createShop = async (
+  user: IRequestUser,
+  payload: ICreateShopPayload,
+  file?: Express.Multer.File,
+) => {
   const slug = await generateUniqueShopSlug(user.organizationId, payload.name);
+
+  const uploadedFile = file as Express.Multer.File & {
+    path?: string;
+    secure_url?: string;
+  };
+
+  const imageUrl = uploadedFile?.path || uploadedFile?.secure_url || null;
 
   const shop = await prisma.shop.create({
     data: {
@@ -60,7 +72,7 @@ const createShop = async (user: IRequestUser, payload: ICreateShopPayload) => {
       email: payload.email,
       phone: payload.phone,
       address: payload.address,
-      image: payload.image,
+      image: imageUrl,
     },
   });
 
@@ -112,6 +124,7 @@ const updateShop = async (
   user: IRequestUser,
   shopId: string,
   payload: IUpdateShopPayload,
+  file?: Express.Multer.File,
 ) => {
   const existingShop = await prisma.shop.findFirst({
     where: {
@@ -125,7 +138,7 @@ const updateShop = async (
     throw new AppError(status.NOT_FOUND, "Shop not found");
   }
 
-  const hasAnyUpdateField = Object.keys(payload).length > 0;
+  const hasAnyUpdateField = Object.keys(payload).length > 0 || !!file;
 
   if (!hasAnyUpdateField) {
     throw new AppError(status.BAD_REQUEST, "No update data provided");
@@ -137,6 +150,17 @@ const updateShop = async (
     slug = await generateUniqueShopSlug(user.organizationId, payload.name);
   }
 
+  const uploadedFile = file as Express.Multer.File & {
+    path?: string;
+    secure_url?: string;
+  };
+
+  const imageUrl =
+    uploadedFile?.path ||
+    uploadedFile?.secure_url ||
+    existingShop.image ||
+    undefined;
+
   const updatedShop = await prisma.shop.update({
     where: {
       id: existingShop.id,
@@ -144,8 +168,13 @@ const updateShop = async (
     data: {
       ...payload,
       slug,
+      image: imageUrl,
     },
   });
+
+  if (file && existingShop.image && existingShop.image !== imageUrl) {
+    await deleteFileFromCloudinary(existingShop.image);
+  }
 
   return updatedShop;
 };

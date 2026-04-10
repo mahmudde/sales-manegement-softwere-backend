@@ -8,6 +8,7 @@ import {
   updateShopStatusValidationSchema,
   updateShopValidationSchema,
 } from "./shop.validation";
+import { multerUpload } from "../../config/multer.config";
 import { OrgRole } from "../../../generated/prisma/enums";
 import { validateRequest } from "../../middlewWire/validateRequest";
 
@@ -16,6 +17,7 @@ const router = Router();
 router.post(
   "/",
   checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  multerUpload.single("image"),
   validateRequest(createShopValidationSchema),
   shopController.createShop,
 );
@@ -35,6 +37,7 @@ router.get(
 router.patch(
   "/:id",
   checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  multerUpload.single("image"),
   validateRequest(updateShopValidationSchema),
   shopController.updateShop,
 );

@@ -1,12 +1,14 @@
 import { Router } from "express";
 
 import { checkAuth } from "../../middlewWire/checkAuth";
+
 import { staffController } from "./staff.controller";
 import {
   createStaffValidationSchema,
   updateStaffStatusValidationSchema,
   updateStaffValidationSchema,
 } from "./staff.validation";
+import { multerUpload } from "../../config/multer.config";
 import { OrgRole } from "../../../generated/prisma/enums";
 import { validateRequest } from "../../middlewWire/validateRequest";
 
@@ -15,6 +17,7 @@ const router = Router();
 router.post(
   "/",
   checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  multerUpload.single("image"),
   validateRequest(createStaffValidationSchema),
   staffController.createStaff,
 );
@@ -34,6 +37,7 @@ router.get(
 router.patch(
   "/:id",
   checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  multerUpload.single("image"),
   validateRequest(updateStaffValidationSchema),
   staffController.updateStaff,
 );

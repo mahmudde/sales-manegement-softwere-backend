@@ -38,8 +38,6 @@ export const updateStaffValidationSchema = z.object({
     .max(20, "Phone number cannot exceed 20 characters")
     .optional(),
 
-  image: z.url("Image must be a valid URL").optional(),
-
   shopId: z.string().min(1, "Shop id is required").optional(),
 
   role: z

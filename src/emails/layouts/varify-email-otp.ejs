@@ -1,0 +1,31 @@
+<%
+  const body = `
+    <h2 style="margin-top: 0;">Verify your email address</h2>
+
+    <p>Hello ${name || "User"},</p>
+
+    <p>
+      Thank you for registering with <strong>${appName}</strong>.
+      Please use the OTP below to verify your email address.
+    </p>
+
+    <div class="otp-box">
+      <div class="otp">${otp}</div>
+    </div>
+
+    <p class="muted">
+      This OTP will expire in ${expiresIn || "10 minutes"}.
+    </p>
+
+    <p class="warning">
+      Do not share this OTP with anyone.
+    </p>
+  `;
+%>
+
+<%- include("../layouts/base", {
+  title: "Verify Email",
+  appName,
+  currentYear,
+  body
+}) %>

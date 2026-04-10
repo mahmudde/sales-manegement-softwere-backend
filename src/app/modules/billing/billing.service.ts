@@ -185,6 +185,8 @@ const handleStripeWebhook = async (rawBody: Buffer, signature: string) => {
     });
   }
 
+  console.log("strype event type=>", event.type);
+
   if (event.type === "payment_intent.payment_failed") {
     const paymentIntent = event.data.object;
 

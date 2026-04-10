@@ -13,7 +13,11 @@ const createStaff = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const result = await staffService.createStaff(user, req.body);
+  const result = await staffService.createStaff(
+    user,
+    req.body,
+    req.file as Express.Multer.File | undefined,
+  );
 
   sendResponse(res, {
     httpStatusCode: status.CREATED,
@@ -72,6 +76,7 @@ const updateStaff = catchAsync(async (req: Request, res: Response) => {
     user,
     req.params.id as string,
     req.body,
+    req.file as Express.Multer.File | undefined,
   );
 
   sendResponse(res, {

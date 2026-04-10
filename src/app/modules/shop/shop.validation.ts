@@ -1,4 +1,5 @@
 import z from "zod";
+import { ShopStatus } from "../../../generated/prisma/enums";
 
 export const createShopValidationSchema = z.object({
   name: z
@@ -19,8 +20,6 @@ export const createShopValidationSchema = z.object({
     .min(3, "Address must be at least 3 characters")
     .max(255, "Address cannot exceed 255 characters")
     .optional(),
-
-  image: z.url("Image must be a valid URL").optional(),
 });
 
 export const updateShopValidationSchema = z.object({
@@ -43,10 +42,8 @@ export const updateShopValidationSchema = z.object({
     .min(3, "Address must be at least 3 characters")
     .max(255, "Address cannot exceed 255 characters")
     .optional(),
-
-  image: z.url("Image must be a valid URL").optional(),
 });
 
 export const updateShopStatusValidationSchema = z.object({
-  status: z.enum(["ACTIVE", "INACTIVE"]),
+  status: z.enum([ShopStatus.ACTIVE, ShopStatus.INACTIVE]),
 });

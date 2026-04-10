@@ -20,6 +20,4 @@ export const updateOrganizationValidationSchema = z.object({
     .min(3, "Address must be at least 3 characters")
     .max(255, "Address cannot exceed 255 characters")
     .optional(),
-
-  logo: z.url("Logo must be a valid URL").optional(),
 });

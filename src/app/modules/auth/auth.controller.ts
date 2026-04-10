@@ -21,7 +21,8 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     httpStatusCode: status.CREATED,
     success: true,
-    message: "User registered successfully",
+    message:
+      "User registered successfully. Please check your email to verify your account",
     data: {
       token,
       accessToken,
@@ -165,6 +166,32 @@ const logOutUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const forgotPassword = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
+
+  await authService.forgotPassword(payload);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "If the email exists, a password reset OTP has been sent",
+    data: null,
+  });
+});
+
+const resetPassword = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
+
+  await authService.resetPassword(payload);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Password reset successfully",
+    data: null,
+  });
+});
+
 export const authController = {
   registerUser,
   loginUser,
@@ -172,4 +199,6 @@ export const authController = {
   getNewToken,
   changePassword,
   logOutUser,
+  forgotPassword,
+  resetPassword,
 };

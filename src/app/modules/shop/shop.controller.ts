@@ -13,7 +13,11 @@ const createShop = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
   }
 
-  const result = await shopService.createShop(user, req.body);
+  const result = await shopService.createShop(
+    user,
+    req.body,
+    req.file as Express.Multer.File | undefined,
+  );
 
   sendResponse(res, {
     httpStatusCode: status.CREATED,
@@ -69,6 +73,7 @@ const updateShop = catchAsync(async (req: Request, res: Response) => {
     user,
     req.params.id as string,
     req.body,
+    req.file as Express.Multer.File | undefined,
   );
 
   sendResponse(res, {

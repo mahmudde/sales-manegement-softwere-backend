@@ -23,6 +23,65 @@ const getDashboardOverview = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSalesAnalytics = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const rawPeriod = req.query.period;
+  const period = rawPeriod === "monthly" ? "monthly" : "daily";
+
+  const result = await dashboardService.getSalesAnalytics(user, period);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Sales analytics fetched successfully",
+    data: result,
+  });
+});
+
+const getTopSellingProducts = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user;
+
+    if (!user) {
+      throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+    }
+
+    const result = await dashboardService.getTopSellingProducts(user);
+
+    sendResponse(res, {
+      httpStatusCode: status.OK,
+      success: true,
+      message: "Top selling products fetched successfully",
+      data: result,
+    });
+  },
+);
+
+const getLowStockProducts = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const result = await dashboardService.getLowStockProducts(user);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Low stock products fetched successfully",
+    data: result,
+  });
+});
+
 export const dashboardController = {
   getDashboardOverview,
+  getSalesAnalytics,
+  getTopSellingProducts,
+  getLowStockProducts,
 };

@@ -17,4 +17,37 @@ router.get(
   dashboardController.getDashboardOverview,
 );
 
+router.get(
+  "/sales-analytics",
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
+  dashboardController.getSalesAnalytics,
+);
+
+router.get(
+  "/top-products",
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
+  dashboardController.getTopSellingProducts,
+);
+
+router.get(
+  "/low-stock",
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
+  dashboardController.getLowStockProducts,
+);
+
 export const dashboardRoutes = router;

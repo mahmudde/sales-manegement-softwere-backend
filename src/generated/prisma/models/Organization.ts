@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model Organization
@@ -37,6 +37,7 @@ export type OrganizationMinAggregateOutputType = {
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  suspendedAt: Date | null
 }
 
 export type OrganizationMaxAggregateOutputType = {
@@ -52,6 +53,7 @@ export type OrganizationMaxAggregateOutputType = {
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  suspendedAt: Date | null
 }
 
 export type OrganizationCountAggregateOutputType = {
@@ -67,6 +69,7 @@ export type OrganizationCountAggregateOutputType = {
   deletedAt: number
   createdAt: number
   updatedAt: number
+  suspendedAt: number
   _all: number
 }
 
@@ -84,6 +87,7 @@ export type OrganizationMinAggregateInputType = {
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  suspendedAt?: true
 }
 
 export type OrganizationMaxAggregateInputType = {
@@ -99,6 +103,7 @@ export type OrganizationMaxAggregateInputType = {
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  suspendedAt?: true
 }
 
 export type OrganizationCountAggregateInputType = {
@@ -114,6 +119,7 @@ export type OrganizationCountAggregateInputType = {
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  suspendedAt?: true
   _all?: true
 }
 
@@ -202,6 +208,7 @@ export type OrganizationGroupByOutputType = {
   deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  suspendedAt: Date | null
   _count: OrganizationCountAggregateOutputType | null
   _min: OrganizationMinAggregateOutputType | null
   _max: OrganizationMaxAggregateOutputType | null
@@ -238,6 +245,7 @@ export type OrganizationWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
+  suspendedAt?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   members?: Prisma.OrganizationMemberListRelationFilter
   shops?: Prisma.ShopListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
@@ -250,6 +258,7 @@ export type OrganizationWhereInput = {
   subscriptions?: Prisma.OrganizationSubscriptionListRelationFilter
   paymentTransactions?: Prisma.PaymentTransactionListRelationFilter
   shopAssignments?: Prisma.ShopAssignmentListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -265,6 +274,7 @@ export type OrganizationOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  suspendedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   members?: Prisma.OrganizationMemberOrderByRelationAggregateInput
   shops?: Prisma.ShopOrderByRelationAggregateInput
   categories?: Prisma.CategoryOrderByRelationAggregateInput
@@ -277,6 +287,7 @@ export type OrganizationOrderByWithRelationInput = {
   subscriptions?: Prisma.OrganizationSubscriptionOrderByRelationAggregateInput
   paymentTransactions?: Prisma.PaymentTransactionOrderByRelationAggregateInput
   shopAssignments?: Prisma.ShopAssignmentOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -295,6 +306,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
+  suspendedAt?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   members?: Prisma.OrganizationMemberListRelationFilter
   shops?: Prisma.ShopListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
@@ -307,6 +319,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   subscriptions?: Prisma.OrganizationSubscriptionListRelationFilter
   paymentTransactions?: Prisma.PaymentTransactionListRelationFilter
   shopAssignments?: Prisma.ShopAssignmentListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -322,6 +335,7 @@ export type OrganizationOrderByWithAggregationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  suspendedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.OrganizationCountOrderByAggregateInput
   _max?: Prisma.OrganizationMaxOrderByAggregateInput
   _min?: Prisma.OrganizationMinOrderByAggregateInput
@@ -343,6 +357,7 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Organization"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
+  suspendedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Organization"> | Date | string | null
 }
 
 export type OrganizationCreateInput = {
@@ -358,6 +373,7 @@ export type OrganizationCreateInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -370,6 +386,7 @@ export type OrganizationCreateInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -385,6 +402,7 @@ export type OrganizationUncheckedCreateInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -397,6 +415,7 @@ export type OrganizationUncheckedCreateInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -412,6 +431,7 @@ export type OrganizationUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -424,6 +444,7 @@ export type OrganizationUpdateInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -439,6 +460,7 @@ export type OrganizationUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -451,6 +473,7 @@ export type OrganizationUncheckedUpdateInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -466,6 +489,7 @@ export type OrganizationCreateManyInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
 }
 
 export type OrganizationUpdateManyMutationInput = {
@@ -481,6 +505,7 @@ export type OrganizationUpdateManyMutationInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type OrganizationUncheckedUpdateManyInput = {
@@ -496,6 +521,7 @@ export type OrganizationUncheckedUpdateManyInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type OrganizationNullableScalarRelationFilter = {
@@ -521,6 +547,7 @@ export type OrganizationCountOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  suspendedAt?: Prisma.SortOrder
 }
 
 export type OrganizationMaxOrderByAggregateInput = {
@@ -536,6 +563,7 @@ export type OrganizationMaxOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  suspendedAt?: Prisma.SortOrder
 }
 
 export type OrganizationMinOrderByAggregateInput = {
@@ -551,6 +579,23 @@ export type OrganizationMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  suspendedAt?: Prisma.SortOrder
+}
+
+export type OrganizationCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAuditLogsInput, Prisma.OrganizationUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAuditLogsInput, Prisma.OrganizationUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.OrganizationUpsertWithoutAuditLogsInput
+  disconnect?: Prisma.OrganizationWhereInput | boolean
+  delete?: Prisma.OrganizationWhereInput | boolean
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.OrganizationUpdateWithoutAuditLogsInput>, Prisma.OrganizationUncheckedUpdateWithoutAuditLogsInput>
 }
 
 export type OrganizationCreateNestedOneWithoutBillingPlansInput = {
@@ -727,6 +772,134 @@ export type OrganizationUpdateOneRequiredWithoutShopAssignmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutShopAssignmentsInput, Prisma.OrganizationUpdateWithoutShopAssignmentsInput>, Prisma.OrganizationUncheckedUpdateWithoutShopAssignmentsInput>
 }
 
+export type OrganizationCreateWithoutAuditLogsInput = {
+  id?: string
+  name: string
+  slug: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.OrganizationStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  suspendedAt?: Date | string | null
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
+  storages?: Prisma.StorageCreateNestedManyWithoutOrganizationInput
+  inventories?: Prisma.InventoryCreateNestedManyWithoutOrganizationInput
+  inventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutOrganizationInput
+  sales?: Prisma.SaleCreateNestedManyWithoutOrganizationInput
+  billingPlans?: Prisma.BillingPlanCreateNestedManyWithoutOrganizationInput
+  subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
+  paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
+  shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutAuditLogsInput = {
+  id?: string
+  name: string
+  slug: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.OrganizationStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  suspendedAt?: Date | string | null
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
+  storages?: Prisma.StorageUncheckedCreateNestedManyWithoutOrganizationInput
+  inventories?: Prisma.InventoryUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutOrganizationInput
+  billingPlans?: Prisma.BillingPlanUncheckedCreateNestedManyWithoutOrganizationInput
+  subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
+  paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAuditLogsInput, Prisma.OrganizationUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type OrganizationUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutAuditLogsInput, Prisma.OrganizationUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAuditLogsInput, Prisma.OrganizationUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutAuditLogsInput, Prisma.OrganizationUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type OrganizationUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
+  storages?: Prisma.StorageUpdateManyWithoutOrganizationNestedInput
+  inventories?: Prisma.InventoryUpdateManyWithoutOrganizationNestedInput
+  inventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutOrganizationNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutOrganizationNestedInput
+  billingPlans?: Prisma.BillingPlanUpdateManyWithoutOrganizationNestedInput
+  subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
+  paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
+  shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+  storages?: Prisma.StorageUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventories?: Prisma.InventoryUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutOrganizationNestedInput
+  billingPlans?: Prisma.BillingPlanUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
 export type OrganizationCreateWithoutBillingPlansInput = {
   id?: string
   name: string
@@ -740,6 +913,7 @@ export type OrganizationCreateWithoutBillingPlansInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -751,6 +925,7 @@ export type OrganizationCreateWithoutBillingPlansInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutBillingPlansInput = {
@@ -766,6 +941,7 @@ export type OrganizationUncheckedCreateWithoutBillingPlansInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -777,6 +953,7 @@ export type OrganizationUncheckedCreateWithoutBillingPlansInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutBillingPlansInput = {
@@ -808,6 +985,7 @@ export type OrganizationUpdateWithoutBillingPlansInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -819,6 +997,7 @@ export type OrganizationUpdateWithoutBillingPlansInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutBillingPlansInput = {
@@ -834,6 +1013,7 @@ export type OrganizationUncheckedUpdateWithoutBillingPlansInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -845,6 +1025,7 @@ export type OrganizationUncheckedUpdateWithoutBillingPlansInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSubscriptionsInput = {
@@ -860,6 +1041,7 @@ export type OrganizationCreateWithoutSubscriptionsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -871,6 +1053,7 @@ export type OrganizationCreateWithoutSubscriptionsInput = {
   billingPlans?: Prisma.BillingPlanCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSubscriptionsInput = {
@@ -886,6 +1069,7 @@ export type OrganizationUncheckedCreateWithoutSubscriptionsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -897,6 +1081,7 @@ export type OrganizationUncheckedCreateWithoutSubscriptionsInput = {
   billingPlans?: Prisma.BillingPlanUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSubscriptionsInput = {
@@ -928,6 +1113,7 @@ export type OrganizationUpdateWithoutSubscriptionsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -939,6 +1125,7 @@ export type OrganizationUpdateWithoutSubscriptionsInput = {
   billingPlans?: Prisma.BillingPlanUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSubscriptionsInput = {
@@ -954,6 +1141,7 @@ export type OrganizationUncheckedUpdateWithoutSubscriptionsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -965,6 +1153,7 @@ export type OrganizationUncheckedUpdateWithoutSubscriptionsInput = {
   billingPlans?: Prisma.BillingPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPaymentTransactionsInput = {
@@ -980,6 +1169,7 @@ export type OrganizationCreateWithoutPaymentTransactionsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -991,6 +1181,7 @@ export type OrganizationCreateWithoutPaymentTransactionsInput = {
   billingPlans?: Prisma.BillingPlanCreateNestedManyWithoutOrganizationInput
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPaymentTransactionsInput = {
@@ -1006,6 +1197,7 @@ export type OrganizationUncheckedCreateWithoutPaymentTransactionsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1017,6 +1209,7 @@ export type OrganizationUncheckedCreateWithoutPaymentTransactionsInput = {
   billingPlans?: Prisma.BillingPlanUncheckedCreateNestedManyWithoutOrganizationInput
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPaymentTransactionsInput = {
@@ -1048,6 +1241,7 @@ export type OrganizationUpdateWithoutPaymentTransactionsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -1059,6 +1253,7 @@ export type OrganizationUpdateWithoutPaymentTransactionsInput = {
   billingPlans?: Prisma.BillingPlanUpdateManyWithoutOrganizationNestedInput
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPaymentTransactionsInput = {
@@ -1074,6 +1269,7 @@ export type OrganizationUncheckedUpdateWithoutPaymentTransactionsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1085,6 +1281,7 @@ export type OrganizationUncheckedUpdateWithoutPaymentTransactionsInput = {
   billingPlans?: Prisma.BillingPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCategoriesInput = {
@@ -1100,6 +1297,7 @@ export type OrganizationCreateWithoutCategoriesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
@@ -1111,6 +1309,7 @@ export type OrganizationCreateWithoutCategoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCategoriesInput = {
@@ -1126,6 +1325,7 @@ export type OrganizationUncheckedCreateWithoutCategoriesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1137,6 +1337,7 @@ export type OrganizationUncheckedCreateWithoutCategoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCategoriesInput = {
@@ -1168,6 +1369,7 @@ export type OrganizationUpdateWithoutCategoriesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
@@ -1179,6 +1381,7 @@ export type OrganizationUpdateWithoutCategoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
@@ -1194,6 +1397,7 @@ export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1205,6 +1409,7 @@ export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutProductsInput = {
@@ -1220,6 +1425,7 @@ export type OrganizationCreateWithoutProductsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -1231,6 +1437,7 @@ export type OrganizationCreateWithoutProductsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutProductsInput = {
@@ -1246,6 +1453,7 @@ export type OrganizationUncheckedCreateWithoutProductsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1257,6 +1465,7 @@ export type OrganizationUncheckedCreateWithoutProductsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutProductsInput = {
@@ -1288,6 +1497,7 @@ export type OrganizationUpdateWithoutProductsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -1299,6 +1509,7 @@ export type OrganizationUpdateWithoutProductsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutProductsInput = {
@@ -1314,6 +1525,7 @@ export type OrganizationUncheckedUpdateWithoutProductsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1325,6 +1537,7 @@ export type OrganizationUncheckedUpdateWithoutProductsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutStoragesInput = {
@@ -1340,6 +1553,7 @@ export type OrganizationCreateWithoutStoragesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -1351,6 +1565,7 @@ export type OrganizationCreateWithoutStoragesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutStoragesInput = {
@@ -1366,6 +1581,7 @@ export type OrganizationUncheckedCreateWithoutStoragesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1377,6 +1593,7 @@ export type OrganizationUncheckedCreateWithoutStoragesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutStoragesInput = {
@@ -1408,6 +1625,7 @@ export type OrganizationUpdateWithoutStoragesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -1419,6 +1637,7 @@ export type OrganizationUpdateWithoutStoragesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutStoragesInput = {
@@ -1434,6 +1653,7 @@ export type OrganizationUncheckedUpdateWithoutStoragesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1445,6 +1665,7 @@ export type OrganizationUncheckedUpdateWithoutStoragesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInventoriesInput = {
@@ -1460,6 +1681,7 @@ export type OrganizationCreateWithoutInventoriesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -1471,6 +1693,7 @@ export type OrganizationCreateWithoutInventoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInventoriesInput = {
@@ -1486,6 +1709,7 @@ export type OrganizationUncheckedCreateWithoutInventoriesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1497,6 +1721,7 @@ export type OrganizationUncheckedCreateWithoutInventoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInventoriesInput = {
@@ -1528,6 +1753,7 @@ export type OrganizationUpdateWithoutInventoriesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -1539,6 +1765,7 @@ export type OrganizationUpdateWithoutInventoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInventoriesInput = {
@@ -1554,6 +1781,7 @@ export type OrganizationUncheckedUpdateWithoutInventoriesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1565,6 +1793,7 @@ export type OrganizationUncheckedUpdateWithoutInventoriesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInventoryTxnsInput = {
@@ -1580,6 +1809,7 @@ export type OrganizationCreateWithoutInventoryTxnsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -1591,6 +1821,7 @@ export type OrganizationCreateWithoutInventoryTxnsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInventoryTxnsInput = {
@@ -1606,6 +1837,7 @@ export type OrganizationUncheckedCreateWithoutInventoryTxnsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1617,6 +1849,7 @@ export type OrganizationUncheckedCreateWithoutInventoryTxnsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInventoryTxnsInput = {
@@ -1648,6 +1881,7 @@ export type OrganizationUpdateWithoutInventoryTxnsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -1659,6 +1893,7 @@ export type OrganizationUpdateWithoutInventoryTxnsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInventoryTxnsInput = {
@@ -1674,6 +1909,7 @@ export type OrganizationUncheckedUpdateWithoutInventoryTxnsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1685,6 +1921,7 @@ export type OrganizationUncheckedUpdateWithoutInventoryTxnsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutMembersInput = {
@@ -1700,6 +1937,7 @@ export type OrganizationCreateWithoutMembersInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
@@ -1711,6 +1949,7 @@ export type OrganizationCreateWithoutMembersInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -1726,6 +1965,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1737,6 +1977,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -1768,6 +2009,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
@@ -1779,6 +2021,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -1794,6 +2037,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1805,6 +2049,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSalesInput = {
@@ -1820,6 +2065,7 @@ export type OrganizationCreateWithoutSalesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -1831,6 +2077,7 @@ export type OrganizationCreateWithoutSalesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSalesInput = {
@@ -1846,6 +2093,7 @@ export type OrganizationUncheckedCreateWithoutSalesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1857,6 +2105,7 @@ export type OrganizationUncheckedCreateWithoutSalesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSalesInput = {
@@ -1888,6 +2137,7 @@ export type OrganizationUpdateWithoutSalesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -1899,6 +2149,7 @@ export type OrganizationUpdateWithoutSalesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSalesInput = {
@@ -1914,6 +2165,7 @@ export type OrganizationUncheckedUpdateWithoutSalesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1925,6 +2177,7 @@ export type OrganizationUncheckedUpdateWithoutSalesInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutShopsInput = {
@@ -1940,6 +2193,7 @@ export type OrganizationCreateWithoutShopsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
@@ -1951,6 +2205,7 @@ export type OrganizationCreateWithoutShopsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutShopsInput = {
@@ -1966,6 +2221,7 @@ export type OrganizationUncheckedCreateWithoutShopsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1977,6 +2233,7 @@ export type OrganizationUncheckedCreateWithoutShopsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutShopsInput = {
@@ -2008,6 +2265,7 @@ export type OrganizationUpdateWithoutShopsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
@@ -2019,6 +2277,7 @@ export type OrganizationUpdateWithoutShopsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutShopsInput = {
@@ -2034,6 +2293,7 @@ export type OrganizationUncheckedUpdateWithoutShopsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2045,6 +2305,7 @@ export type OrganizationUncheckedUpdateWithoutShopsInput = {
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutShopAssignmentsInput = {
@@ -2060,6 +2321,7 @@ export type OrganizationCreateWithoutShopAssignmentsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
@@ -2071,6 +2333,7 @@ export type OrganizationCreateWithoutShopAssignmentsInput = {
   billingPlans?: Prisma.BillingPlanCreateNestedManyWithoutOrganizationInput
   subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutShopAssignmentsInput = {
@@ -2086,6 +2349,7 @@ export type OrganizationUncheckedCreateWithoutShopAssignmentsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  suspendedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2097,6 +2361,7 @@ export type OrganizationUncheckedCreateWithoutShopAssignmentsInput = {
   billingPlans?: Prisma.BillingPlanUncheckedCreateNestedManyWithoutOrganizationInput
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutShopAssignmentsInput = {
@@ -2128,6 +2393,7 @@ export type OrganizationUpdateWithoutShopAssignmentsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
@@ -2139,6 +2405,7 @@ export type OrganizationUpdateWithoutShopAssignmentsInput = {
   billingPlans?: Prisma.BillingPlanUpdateManyWithoutOrganizationNestedInput
   subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutShopAssignmentsInput = {
@@ -2154,6 +2421,7 @@ export type OrganizationUncheckedUpdateWithoutShopAssignmentsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2165,6 +2433,7 @@ export type OrganizationUncheckedUpdateWithoutShopAssignmentsInput = {
   billingPlans?: Prisma.BillingPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -2185,6 +2454,7 @@ export type OrganizationCountOutputType = {
   subscriptions: number
   paymentTransactions: number
   shopAssignments: number
+  auditLogs: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2200,6 +2470,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   subscriptions?: boolean | OrganizationCountOutputTypeCountSubscriptionsArgs
   paymentTransactions?: boolean | OrganizationCountOutputTypeCountPaymentTransactionsArgs
   shopAssignments?: boolean | OrganizationCountOutputTypeCountShopAssignmentsArgs
+  auditLogs?: boolean | OrganizationCountOutputTypeCountAuditLogsArgs
 }
 
 /**
@@ -2296,6 +2567,13 @@ export type OrganizationCountOutputTypeCountShopAssignmentsArgs<ExtArgs extends 
   where?: Prisma.ShopAssignmentWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2310,6 +2588,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  suspendedAt?: boolean
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   shops?: boolean | Prisma.Organization$shopsArgs<ExtArgs>
   categories?: boolean | Prisma.Organization$categoriesArgs<ExtArgs>
@@ -2322,6 +2601,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   subscriptions?: boolean | Prisma.Organization$subscriptionsArgs<ExtArgs>
   paymentTransactions?: boolean | Prisma.Organization$paymentTransactionsArgs<ExtArgs>
   shopAssignments?: boolean | Prisma.Organization$shopAssignmentsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.Organization$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -2338,6 +2618,7 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  suspendedAt?: boolean
 }, ExtArgs["result"]["organization"]>
 
 export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2353,6 +2634,7 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  suspendedAt?: boolean
 }, ExtArgs["result"]["organization"]>
 
 export type OrganizationSelectScalar = {
@@ -2368,9 +2650,10 @@ export type OrganizationSelectScalar = {
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  suspendedAt?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "email" | "phone" | "address" | "logo" | "status" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "email" | "phone" | "address" | "logo" | "status" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "suspendedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   shops?: boolean | Prisma.Organization$shopsArgs<ExtArgs>
@@ -2384,6 +2667,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   subscriptions?: boolean | Prisma.Organization$subscriptionsArgs<ExtArgs>
   paymentTransactions?: boolean | Prisma.Organization$paymentTransactionsArgs<ExtArgs>
   shopAssignments?: boolean | Prisma.Organization$shopAssignmentsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.Organization$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2404,6 +2688,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     subscriptions: Prisma.$OrganizationSubscriptionPayload<ExtArgs>[]
     paymentTransactions: Prisma.$PaymentTransactionPayload<ExtArgs>[]
     shopAssignments: Prisma.$ShopAssignmentPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2418,6 +2703,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    suspendedAt: Date | null
   }, ExtArgs["result"]["organization"]>
   composites: {}
 }
@@ -2824,6 +3110,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   subscriptions<T extends Prisma.Organization$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paymentTransactions<T extends Prisma.Organization$paymentTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$paymentTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shopAssignments<T extends Prisma.Organization$shopAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$shopAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShopAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.Organization$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2865,6 +3152,7 @@ export interface OrganizationFieldRefs {
   readonly deletedAt: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Organization", 'DateTime'>
+  readonly suspendedAt: Prisma.FieldRef<"Organization", 'DateTime'>
 }
     
 
@@ -3543,6 +3831,30 @@ export type Organization$shopAssignmentsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.ShopAssignmentScalarFieldEnum | Prisma.ShopAssignmentScalarFieldEnum[]
+}
+
+/**
+ * Organization.auditLogs
+ */
+export type Organization$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
 }
 
 /**

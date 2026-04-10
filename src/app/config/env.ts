@@ -28,6 +28,9 @@ interface EnvConfig {
   EMAIL_SENDER_SMTP_HOST: string;
   EMAIL_SENDER_SMTP_PORT: string;
   EMAIL_SENDER_SMTP_FROM: string;
+  PLATFORM_SUPER_ADMIN_NAME: string;
+  PLATFORM_SUPER_ADMIN_EMAIL: string;
+  PLATFORM_SUPER_ADMIN_PASSWORD: string;
 }
 
 const requiredEnvVars = [
@@ -54,6 +57,9 @@ const requiredEnvVars = [
   "EMAIL_SENDER_SMTP_HOST",
   "EMAIL_SENDER_SMTP_PORT",
   "EMAIL_SENDER_SMTP_FROM",
+  "PLATFORM_SUPER_ADMIN_NAME",
+  "PLATFORM_SUPER_ADMIN_EMAIL",
+  "PLATFORM_SUPER_ADMIN_PASSWORD",
 ] as const;
 
 const loadEnvVariables = (): EnvConfig => {
@@ -92,6 +98,11 @@ const loadEnvVariables = (): EnvConfig => {
     EMAIL_SENDER_SMTP_HOST: process.env.EMAIL_SENDER_SMTP_HOST as string,
     EMAIL_SENDER_SMTP_PORT: process.env.EMAIL_SENDER_SMTP_PORT as string,
     EMAIL_SENDER_SMTP_FROM: process.env.EMAIL_SENDER_SMTP_FROM as string,
+    PLATFORM_SUPER_ADMIN_NAME: process.env.PLATFORM_SUPER_ADMIN_NAME as string,
+    PLATFORM_SUPER_ADMIN_EMAIL: process.env
+      .PLATFORM_SUPER_ADMIN_EMAIL as string,
+    PLATFORM_SUPER_ADMIN_PASSWORD: process.env
+      .PLATFORM_SUPER_ADMIN_PASSWORD as string,
   };
 };
 

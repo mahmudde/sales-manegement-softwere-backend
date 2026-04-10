@@ -37,3 +37,7 @@ enum StorageStatus {
   ACTIVE
   INACTIVE
 }
+
+enum PlatformRole {
+  PLATFORM_SUPER_ADMIN
+}

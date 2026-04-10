@@ -1,4 +1,8 @@
-import { OrgRole, UserStatus } from "../../../generated/prisma/enums";
+import {
+  OrgRole,
+  PlatformRole,
+  UserStatus,
+} from "../../../generated/prisma/enums";
 
 export interface IRegisterUserPayload {
   organizationName: string;
@@ -31,10 +35,10 @@ export interface IResetPasswordPayload {
 export interface IRequestUser {
   userId: string;
   email: string;
-  name: string;
-  role: OrgRole;
-  organizationId: string;
-  status: UserStatus;
-  isDeleted: boolean;
-  emailVerified: boolean;
+  name?: string;
+  role: OrgRole | PlatformRole;
+  organizationId?: string;
+  status?: UserStatus;
+  isDeleted?: boolean;
+  emailVerified?: boolean;
 }

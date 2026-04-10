@@ -101,6 +101,13 @@ export const StorageStatus = {
 export type StorageStatus = (typeof StorageStatus)[keyof typeof StorageStatus]
 
 
+export const PlatformRole = {
+  PLATFORM_SUPER_ADMIN: 'PLATFORM_SUPER_ADMIN'
+} as const
+
+export type PlatformRole = (typeof PlatformRole)[keyof typeof PlatformRole]
+
+
 export const InventoryTransactionType = {
   STOCK_IN: 'STOCK_IN',
   STOCK_OUT: 'STOCK_OUT',

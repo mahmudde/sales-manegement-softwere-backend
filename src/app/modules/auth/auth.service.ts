@@ -15,7 +15,7 @@ import {
 } from "./auth.interface";
 import { prisma } from "../../lib/prisma";
 import { OrgRole, UserStatus } from "../../../generated/prisma/enums";
-import { Prisma } from "../../../generated/prisma/browser";
+import { PlatformRole, Prisma } from "../../../generated/prisma/client";
 
 const generateSlug = (value: string) =>
   value
@@ -81,6 +81,20 @@ const buildJwtPayload = async (userId: string) => {
 
   if (user.isDeleted) {
     throw new AppError(status.NOT_FOUND, "User not found");
+  }
+
+  // PLATFORM USER SUPPORT
+  if (user.platformRole === PlatformRole.PLATFORM_SUPER_ADMIN) {
+    return {
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.platformRole,
+      organizationId: null,
+      status: user.status,
+      isDeleted: user.isDeleted,
+      emailVerified: user.emailVerified,
+    };
   }
 
   const membership = user.organizationMembers[0];
@@ -360,13 +374,13 @@ const logOutUser = async (sessionToken: string) => {
 
 const forgotPassword = async (payload: IForgotPasswordPayload) => {
   const { email } = payload;
+
   const user = await prisma.user.findUnique({
     where: {
       email,
     },
   });
 
-  // Prevent email enumeration
   if (!user || user.isDeleted) {
     return null;
   }
@@ -390,6 +404,7 @@ const forgotPassword = async (payload: IForgotPasswordPayload) => {
 
 const resetPassword = async (payload: IResetPasswordPayload) => {
   const { email, otp, newPassword } = payload;
+
   const user = await prisma.user.findUnique({
     where: {
       email,

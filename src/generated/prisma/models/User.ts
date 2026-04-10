@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model User
@@ -32,6 +32,7 @@ export type UserMinAggregateOutputType = {
   image: string | null
   phone: string | null
   status: $Enums.UserStatus | null
+  platformRole: $Enums.PlatformRole | null
   isDeleted: boolean | null
   deletedAt: Date | null
   createdAt: Date | null
@@ -46,6 +47,7 @@ export type UserMaxAggregateOutputType = {
   image: string | null
   phone: string | null
   status: $Enums.UserStatus | null
+  platformRole: $Enums.PlatformRole | null
   isDeleted: boolean | null
   deletedAt: Date | null
   createdAt: Date | null
@@ -60,6 +62,7 @@ export type UserCountAggregateOutputType = {
   image: number
   phone: number
   status: number
+  platformRole: number
   isDeleted: number
   deletedAt: number
   createdAt: number
@@ -76,6 +79,7 @@ export type UserMinAggregateInputType = {
   image?: true
   phone?: true
   status?: true
+  platformRole?: true
   isDeleted?: true
   deletedAt?: true
   createdAt?: true
@@ -90,6 +94,7 @@ export type UserMaxAggregateInputType = {
   image?: true
   phone?: true
   status?: true
+  platformRole?: true
   isDeleted?: true
   deletedAt?: true
   createdAt?: true
@@ -104,6 +109,7 @@ export type UserCountAggregateInputType = {
   image?: true
   phone?: true
   status?: true
+  platformRole?: true
   isDeleted?: true
   deletedAt?: true
   createdAt?: true
@@ -191,6 +197,7 @@ export type UserGroupByOutputType = {
   image: string | null
   phone: string | null
   status: $Enums.UserStatus
+  platformRole: $Enums.PlatformRole | null
   isDeleted: boolean
   deletedAt: Date | null
   createdAt: Date
@@ -226,12 +233,14 @@ export type UserWhereInput = {
   image?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
+  platformRole?: Prisma.EnumPlatformRoleNullableFilter<"User"> | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
   organizationMembers?: Prisma.OrganizationMemberListRelationFilter
   shopAssignments?: Prisma.ShopAssignmentListRelationFilter
   createdSales?: Prisma.SaleListRelationFilter
@@ -247,12 +256,14 @@ export type UserOrderByWithRelationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  platformRole?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
   organizationMembers?: Prisma.OrganizationMemberOrderByRelationAggregateInput
   shopAssignments?: Prisma.ShopAssignmentOrderByRelationAggregateInput
   createdSales?: Prisma.SaleOrderByRelationAggregateInput
@@ -271,12 +282,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   image?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
+  platformRole?: Prisma.EnumPlatformRoleNullableFilter<"User"> | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
   organizationMembers?: Prisma.OrganizationMemberListRelationFilter
   shopAssignments?: Prisma.ShopAssignmentListRelationFilter
   createdSales?: Prisma.SaleListRelationFilter
@@ -292,6 +305,7 @@ export type UserOrderByWithAggregationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  platformRole?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -312,6 +326,7 @@ export type UserScalarWhereWithAggregatesInput = {
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
+  platformRole?: Prisma.EnumPlatformRoleNullableWithAggregatesFilter<"User"> | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -326,12 +341,14 @@ export type UserCreateInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
@@ -347,12 +364,14 @@ export type UserUncheckedCreateInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
@@ -368,12 +387,14 @@ export type UserUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
@@ -389,12 +410,14 @@ export type UserUncheckedUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -410,6 +433,7 @@ export type UserCreateManyInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -424,6 +448,7 @@ export type UserUpdateManyMutationInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -438,10 +463,16 @@ export type UserUncheckedUpdateManyInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -452,6 +483,7 @@ export type UserCountOrderByAggregateInput = {
   image?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  platformRole?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -466,6 +498,7 @@ export type UserMaxOrderByAggregateInput = {
   image?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  platformRole?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -480,6 +513,7 @@ export type UserMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  platformRole?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -491,33 +525,36 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
+export type UserCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.UserWhereUniqueInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type UserUpdateOneWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.UserUpsertWithoutAuditLogsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.UserUpdateWithoutAuditLogsInput>, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
 }
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
+export type NullableEnumPlatformRoleFieldUpdateOperationsInput = {
+  set?: $Enums.PlatformRole | null
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
@@ -620,6 +657,110 @@ export type UserUpdateOneRequiredWithoutShopAssignmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutShopAssignmentsInput, Prisma.UserUpdateWithoutShopAssignmentsInput>, Prisma.UserUncheckedUpdateWithoutShopAssignmentsInput>
 }
 
+export type UserCreateWithoutAuditLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  phone?: string | null
+  status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
+  createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
+  createdInventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutCreatedByInput
+  createdPayments?: Prisma.PaymentTransactionCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutAuditLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  phone?: string | null
+  status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
+  createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
+  createdInventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdPayments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type UserUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type UserUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
+  createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
+  createdInventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutCreatedByNestedInput
+  createdPayments?: Prisma.PaymentTransactionUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdInventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdPayments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
@@ -628,11 +769,13 @@ export type UserCreateWithoutSessionsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
@@ -648,11 +791,13 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
@@ -684,11 +829,13 @@ export type UserUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
@@ -704,11 +851,13 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -724,11 +873,13 @@ export type UserCreateWithoutAccountsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
@@ -744,11 +895,13 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
@@ -780,11 +933,13 @@ export type UserUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
@@ -800,11 +955,13 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -820,12 +977,14 @@ export type UserCreateWithoutCreatedPaymentsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
@@ -840,12 +999,14 @@ export type UserUncheckedCreateWithoutCreatedPaymentsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
@@ -876,12 +1037,14 @@ export type UserUpdateWithoutCreatedPaymentsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
@@ -896,12 +1059,14 @@ export type UserUncheckedUpdateWithoutCreatedPaymentsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -916,12 +1081,14 @@ export type UserCreateWithoutCreatedInventoryTxnsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
@@ -936,12 +1103,14 @@ export type UserUncheckedCreateWithoutCreatedInventoryTxnsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
@@ -972,12 +1141,14 @@ export type UserUpdateWithoutCreatedInventoryTxnsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
@@ -992,12 +1163,14 @@ export type UserUncheckedUpdateWithoutCreatedInventoryTxnsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1012,12 +1185,14 @@ export type UserCreateWithoutOrganizationMembersInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   createdInventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutCreatedByInput
@@ -1032,12 +1207,14 @@ export type UserUncheckedCreateWithoutOrganizationMembersInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   createdInventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -1068,12 +1245,14 @@ export type UserUpdateWithoutOrganizationMembersInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   createdInventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutCreatedByNestedInput
@@ -1088,12 +1267,14 @@ export type UserUncheckedUpdateWithoutOrganizationMembersInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   createdInventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1108,12 +1289,14 @@ export type UserCreateWithoutCreatedSalesInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutUserInput
   createdInventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutCreatedByInput
@@ -1128,12 +1311,14 @@ export type UserUncheckedCreateWithoutCreatedSalesInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutUserInput
   createdInventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -1164,12 +1349,14 @@ export type UserUpdateWithoutCreatedSalesInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutUserNestedInput
   createdInventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutCreatedByNestedInput
@@ -1184,12 +1371,14 @@ export type UserUncheckedUpdateWithoutCreatedSalesInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutUserNestedInput
   createdInventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1204,12 +1393,14 @@ export type UserCreateWithoutShopAssignmentsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   createdInventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutCreatedByInput
@@ -1224,12 +1415,14 @@ export type UserUncheckedCreateWithoutShopAssignmentsInput = {
   image?: string | null
   phone?: string | null
   status?: $Enums.UserStatus
+  platformRole?: $Enums.PlatformRole | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   createdSales?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   createdInventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -1260,12 +1453,14 @@ export type UserUpdateWithoutShopAssignmentsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   createdInventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutCreatedByNestedInput
@@ -1280,12 +1475,14 @@ export type UserUncheckedUpdateWithoutShopAssignmentsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformRole?: Prisma.NullableEnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   organizationMembers?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   createdSales?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   createdInventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1300,6 +1497,7 @@ export type UserUncheckedUpdateWithoutShopAssignmentsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  auditLogs: number
   organizationMembers: number
   shopAssignments: number
   createdSales: number
@@ -1310,6 +1508,7 @@ export type UserCountOutputType = {
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
   organizationMembers?: boolean | UserCountOutputTypeCountOrganizationMembersArgs
   shopAssignments?: boolean | UserCountOutputTypeCountShopAssignmentsArgs
   createdSales?: boolean | UserCountOutputTypeCountCreatedSalesArgs
@@ -1339,6 +1538,13 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
  */
 export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AccountWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
 }
 
 /**
@@ -1385,12 +1591,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   image?: boolean
   phone?: boolean
   status?: boolean
+  platformRole?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   organizationMembers?: boolean | Prisma.User$organizationMembersArgs<ExtArgs>
   shopAssignments?: boolean | Prisma.User$shopAssignmentsArgs<ExtArgs>
   createdSales?: boolean | Prisma.User$createdSalesArgs<ExtArgs>
@@ -1407,6 +1615,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   phone?: boolean
   status?: boolean
+  platformRole?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1421,6 +1630,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   phone?: boolean
   status?: boolean
+  platformRole?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1435,16 +1645,18 @@ export type UserSelectScalar = {
   image?: boolean
   phone?: boolean
   status?: boolean
+  platformRole?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "phone" | "status" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "phone" | "status" | "platformRole" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   organizationMembers?: boolean | Prisma.User$organizationMembersArgs<ExtArgs>
   shopAssignments?: boolean | Prisma.User$shopAssignmentsArgs<ExtArgs>
   createdSales?: boolean | Prisma.User$createdSalesArgs<ExtArgs>
@@ -1460,6 +1672,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     organizationMembers: Prisma.$OrganizationMemberPayload<ExtArgs>[]
     shopAssignments: Prisma.$ShopAssignmentPayload<ExtArgs>[]
     createdSales: Prisma.$SalePayload<ExtArgs>[]
@@ -1474,6 +1687,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     image: string | null
     phone: string | null
     status: $Enums.UserStatus
+    platformRole: $Enums.PlatformRole | null
     isDeleted: boolean
     deletedAt: Date | null
     createdAt: Date
@@ -1874,6 +2088,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organizationMembers<T extends Prisma.User$organizationMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizationMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shopAssignments<T extends Prisma.User$shopAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shopAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShopAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdSales<T extends Prisma.User$createdSalesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdSalesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1915,6 +2130,7 @@ export interface UserFieldRefs {
   readonly image: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
+  readonly platformRole: Prisma.FieldRef<"User", 'PlatformRole'>
   readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -2357,6 +2573,30 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.auditLogs
+ */
+export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
 }
 
 /**

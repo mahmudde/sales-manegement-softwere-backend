@@ -9,6 +9,7 @@ import { storageRoutes } from "../modules/storage/storage.route";
 import { inventoryRoutes } from "../modules/inventory/inventory.route";
 import { saleRoutes } from "../modules/sale/sale.route";
 import { billingRoutes } from "../modules/billing/billing.route";
+import { dashboardRoutes } from "../modules/dashboard/dashboard.route";
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use("/storages", storageRoutes);
 router.use("/inventory", inventoryRoutes);
 router.use("/sales", saleRoutes);
 router.use("/billing", billingRoutes);
+router.use("/dashboard", dashboardRoutes);
 
 export const indexRoutes = router;

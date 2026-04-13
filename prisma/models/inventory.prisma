@@ -14,6 +14,7 @@ model Storage {
   shop          Shop                   @relation(fields: [shopId], references: [id], onDelete: Cascade)
   inventories   Inventory[]
   inventoryTxns InventoryTransaction[]
+  returns       SaleReturn[]
 
   @@unique([shopId, name])
   @@index([organizationId, shopId])

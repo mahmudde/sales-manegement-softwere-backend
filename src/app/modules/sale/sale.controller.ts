@@ -58,8 +58,65 @@ const getSingleSale = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const addSalePayment = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+  const result = await saleService.addSalePayment(user, id as string, req.body);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Sale payment collected successfully",
+    data: result,
+  });
+});
+
+const getSalePayments = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+  const result = await saleService.getSalePayments(user, id as string);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Sale payment history fetched successfully",
+    data: result,
+  });
+});
+
+const cancelSale = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+  const result = await saleService.cancelSale(user, id as string, req.body);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Sale cancelled successfully",
+    data: result,
+  });
+});
+
 export const saleController = {
   createSale,
+  addSalePayment,
+  getSalePayments,
   getAllSales,
   getSingleSale,
+  cancelSale,
 };

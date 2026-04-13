@@ -24,14 +24,24 @@ router.post(
 
 router.get(
   "/",
-  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
   productController.getAllProducts,
 );
 
 router.get(
-  "/:id",
-  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
-  productController.getSingleProduct,
+  "/",
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
+  productController.getAllProducts,
 );
 
 router.patch(

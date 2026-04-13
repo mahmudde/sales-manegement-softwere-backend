@@ -26,6 +26,7 @@ model Organization {
   paymentTransactions PaymentTransaction[]
   shopAssignments     ShopAssignment[]
   auditLogs           AuditLog[]
+  returns             SaleReturn[]
 }
 
 model OrganizationMember {

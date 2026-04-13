@@ -1,14 +1,33 @@
 import { NextFunction, Request, Response } from "express";
 import status from "http-status";
-import { OrgRole, UserStatus } from "../../generated/prisma/enums";
+import {
+  OrgRole,
+  OrganizationStatus,
+  UserStatus,
+} from "../../generated/prisma/client";
+
 import { cookieUtils } from "../utils/cookie";
 import AppError from "../errorHelper/AppError";
 import { prisma } from "../lib/prisma";
 
+interface ICheckAuthOptions {
+  allowWithoutSubscription?: boolean;
+}
+
 export const checkAuth =
-  (...authRoles: OrgRole[]) =>
+  (...args: (OrgRole | ICheckAuthOptions)[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const authRoles = args.filter(
+        (arg): arg is OrgRole => typeof arg === "string",
+      );
+
+      const options =
+        args.find(
+          (arg): arg is ICheckAuthOptions =>
+            typeof arg === "object" && arg !== null,
+        ) || {};
+
       const sessionToken = cookieUtils.getCookie(
         req,
         "better-auth.session_token",
@@ -34,6 +53,9 @@ export const checkAuth =
               organizationMembers: {
                 where: {
                   isActive: true,
+                },
+                include: {
+                  organization: true,
                 },
                 orderBy: {
                   createdAt: "asc",
@@ -98,6 +120,29 @@ export const checkAuth =
         );
       }
 
+      const organization = membership.organization;
+
+      if (!organization || organization.isDeleted) {
+        throw new AppError(
+          status.FORBIDDEN,
+          "Forbidden access! Organization not found",
+        );
+      }
+
+      if (organization.status === OrganizationStatus.INACTIVE) {
+        throw new AppError(
+          status.FORBIDDEN,
+          "Your organization is inactive. Please contact support",
+        );
+      }
+
+      if (organization.status === OrganizationStatus.SUSPENDED) {
+        throw new AppError(
+          status.FORBIDDEN,
+          "Your organization is suspended. Please contact support",
+        );
+      }
+
       if (authRoles.length > 0 && !authRoles.includes(membership.role)) {
         throw new AppError(
           status.FORBIDDEN,
@@ -105,11 +150,41 @@ export const checkAuth =
         );
       }
 
+      if (!options.allowWithoutSubscription) {
+        const activeSubscription =
+          await prisma.organizationSubscription.findFirst({
+            where: {
+              organizationId: membership.organizationId,
+              status: "ACTIVE",
+              startsAt: {
+                lte: new Date(),
+              },
+              endsAt: {
+                gte: new Date(),
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+          });
+
+        if (!activeSubscription) {
+          throw new AppError(
+            status.FORBIDDEN,
+            "No active subscription found. Please subscribe or renew your plan",
+          );
+        }
+      }
+
       req.user = {
         userId: user.id,
         email: user.email,
+        name: user.name,
         role: membership.role,
         organizationId: membership.organizationId,
+        status: user.status,
+        isDeleted: user.isDeleted,
+        emailVerified: user.emailVerified,
       };
 
       next();

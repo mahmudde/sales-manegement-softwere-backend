@@ -38,6 +38,7 @@ model Product {
   inventories   Inventory[]
   inventoryTxns InventoryTransaction[]
   saleItems     SaleItem[]
+  items         SaleReturnItem[]
 
   @@unique([organizationId, slug])
   @@unique([organizationId, sku])

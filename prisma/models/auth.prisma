@@ -22,6 +22,8 @@ model User {
   createdSales         Sale[]                 @relation("SaleCreatedBy")
   createdInventoryTxns InventoryTransaction[] @relation("InventoryTxnCreatedBy")
   createdPayments      PaymentTransaction[]   @relation("PaymentCreatedBy")
+  salePaymentsReceived SalePayment[]          @relation("SalePaymentReceivedBy")
+  saleReturns          SaleReturn[]           @relation("SaleReturnReturnedBy")
 
   @@unique([email])
   @@map("user")

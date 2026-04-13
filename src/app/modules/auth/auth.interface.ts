@@ -37,7 +37,7 @@ export interface IRequestUser {
   email: string;
   name?: string;
   role: OrgRole | PlatformRole;
-  organizationId?: string;
+  organizationId?: string | null;
   status?: UserStatus;
   isDeleted?: boolean;
   emailVerified?: boolean;

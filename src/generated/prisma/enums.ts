@@ -108,6 +108,23 @@ export const PlatformRole = {
 export type PlatformRole = (typeof PlatformRole)[keyof typeof PlatformRole]
 
 
+export const SalePaymentStatus = {
+  UNPAID: 'UNPAID',
+  PARTIAL: 'PARTIAL',
+  PAID: 'PAID'
+} as const
+
+export type SalePaymentStatus = (typeof SalePaymentStatus)[keyof typeof SalePaymentStatus]
+
+
+export const SaleReturnStatus = {
+  PARTIAL: 'PARTIAL',
+  FULL: 'FULL'
+} as const
+
+export type SaleReturnStatus = (typeof SaleReturnStatus)[keyof typeof SaleReturnStatus]
+
+
 export const InventoryTransactionType = {
   STOCK_IN: 'STOCK_IN',
   STOCK_OUT: 'STOCK_OUT',

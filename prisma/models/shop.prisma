@@ -19,6 +19,7 @@ model Shop {
   inventories   Inventory[]
   inventoryTxns InventoryTransaction[]
   sales         Sale[]
+  saleReturns   SaleReturn[]
 
   @@unique([organizationId, slug])
   @@index([organizationId])

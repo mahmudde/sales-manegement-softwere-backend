@@ -66,6 +66,9 @@ export const ModelName = {
   InventoryTransaction: 'InventoryTransaction',
   Organization: 'Organization',
   OrganizationMember: 'OrganizationMember',
+  SalePayment: 'SalePayment',
+  SaleReturn: 'SaleReturn',
+  SaleReturnItem: 'SaleReturnItem',
   Sale: 'Sale',
   SaleItem: 'SaleItem',
   Shop: 'Shop',
@@ -334,6 +337,51 @@ export const OrganizationMemberScalarFieldEnum = {
 export type OrganizationMemberScalarFieldEnum = (typeof OrganizationMemberScalarFieldEnum)[keyof typeof OrganizationMemberScalarFieldEnum]
 
 
+export const SalePaymentScalarFieldEnum = {
+  id: 'id',
+  saleId: 'saleId',
+  receivedById: 'receivedById',
+  amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SalePaymentScalarFieldEnum = (typeof SalePaymentScalarFieldEnum)[keyof typeof SalePaymentScalarFieldEnum]
+
+
+export const SaleReturnScalarFieldEnum = {
+  id: 'id',
+  saleId: 'saleId',
+  organizationId: 'organizationId',
+  shopId: 'shopId',
+  storageId: 'storageId',
+  returnedById: 'returnedById',
+  refundAmount: 'refundAmount',
+  status: 'status',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SaleReturnScalarFieldEnum = (typeof SaleReturnScalarFieldEnum)[keyof typeof SaleReturnScalarFieldEnum]
+
+
+export const SaleReturnItemScalarFieldEnum = {
+  id: 'id',
+  saleReturnId: 'saleReturnId',
+  saleItemId: 'saleItemId',
+  productId: 'productId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  totalPrice: 'totalPrice',
+  createdAt: 'createdAt'
+} as const
+
+export type SaleReturnItemScalarFieldEnum = (typeof SaleReturnItemScalarFieldEnum)[keyof typeof SaleReturnItemScalarFieldEnum]
+
+
 export const SaleScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -346,6 +394,9 @@ export const SaleScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   status: 'status',
   note: 'note',
+  paymentStatus: 'paymentStatus',
+  paidAmount: 'paidAmount',
+  dueAmount: 'dueAmount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

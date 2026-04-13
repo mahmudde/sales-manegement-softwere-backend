@@ -41,3 +41,14 @@ enum StorageStatus {
 enum PlatformRole {
   PLATFORM_SUPER_ADMIN
 }
+
+enum SalePaymentStatus {
+  UNPAID
+  PARTIAL
+  PAID
+}
+
+enum SaleReturnStatus {
+  PARTIAL
+  FULL
+}

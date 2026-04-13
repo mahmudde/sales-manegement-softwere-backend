@@ -1,0 +1,42 @@
+model SaleReturn {
+    id             String           @id @default(cuid())
+    saleId         String
+    organizationId String
+    shopId         String
+    storageId      String
+    returnedById   String
+    refundAmount   Decimal          @db.Decimal(10, 2)
+    status         SaleReturnStatus
+    note           String?
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+
+    sale         Sale             @relation(fields: [saleId], references: [id], onDelete: Cascade)
+    organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    shop         Shop             @relation(fields: [shopId], references: [id], onDelete: Cascade)
+    storage      Storage          @relation(fields: [storageId], references: [id], onDelete: Cascade)
+    returnedBy   User             @relation("SaleReturnReturnedBy", fields: [returnedById], references: [id], onDelete: Restrict)
+    items        SaleReturnItem[] @relation("SaleReturnToItems")
+
+    @@index([saleId])
+    @@index([organizationId, createdAt])
+}
+
+model SaleReturnItem {
+    id           String   @id @default(cuid())
+    saleReturnId String
+    saleItemId   String
+    productId    String
+    quantity     Int
+    unitPrice    Decimal  @db.Decimal(10, 2)
+    totalPrice   Decimal  @db.Decimal(10, 2)
+    createdAt    DateTime @default(now())
+
+    saleReturn SaleReturn @relation("SaleReturnToItems", fields: [saleReturnId], references: [id], onDelete: Cascade)
+    saleItem   SaleItem   @relation(fields: [saleItemId], references: [id], onDelete: Restrict)
+    product    Product    @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+    @@index([saleReturnId])
+    @@index([saleItemId])
+    @@index([productId])
+}

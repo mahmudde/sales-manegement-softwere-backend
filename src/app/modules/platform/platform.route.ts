@@ -27,7 +27,7 @@ router.get(
 );
 
 router.patch(
-  "/organizations/:id/status",
+  "/organizations/:id",
   checkPlatformAuth(PlatformRole.PLATFORM_SUPER_ADMIN),
   validateRequest(updateOrganizationStatusValidationSchema),
   platformController.updateOrganizationStatus,

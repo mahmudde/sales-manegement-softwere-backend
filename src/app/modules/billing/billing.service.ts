@@ -11,10 +11,27 @@ import {
   SubscriptionStatus,
 } from "../../../generated/prisma/enums";
 
+const getBillingPlans = async () => {
+  const plans = await prisma.billingPlan.findMany({
+    where: {
+      isActive: true,
+    },
+    orderBy: {
+      amount: "asc",
+    },
+  });
+
+  return plans;
+};
+
 const createPaymentIntent = async (
   user: IRequestUser,
   payload: ICreatePaymentIntentPayload,
 ) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
   const billingPlan = await prisma.billingPlan.findFirst({
     where: {
       id: payload.billingPlanId,
@@ -40,6 +57,9 @@ const createPaymentIntent = async (
     where: {
       organizationId: user.organizationId,
       billingPlanId: billingPlan.id,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
@@ -70,6 +90,7 @@ const createPaymentIntent = async (
       subscriptionId: subscription.id,
       billingPlanId: billingPlan.id,
       createdById: user.userId,
+      paymentType: "subscription",
     },
   });
 
@@ -83,7 +104,7 @@ const createPaymentIntent = async (
       status: PaymentStatus.PENDING,
       stripePaymentIntentId: paymentIntent.id,
       stripeClientSecret: paymentIntent.client_secret,
-      note: `Payment initiated for ${billingPlan.name} plan`,
+      note: `Subscription payment initiated for ${billingPlan.name} plan`,
     },
   });
 
@@ -97,6 +118,10 @@ const createPaymentIntent = async (
 };
 
 const getBillingStatus = async (user: IRequestUser) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
   const subscription = await prisma.organizationSubscription.findFirst({
     where: {
       organizationId: user.organizationId,
@@ -118,6 +143,10 @@ const getBillingStatus = async (user: IRequestUser) => {
 };
 
 const getBillingHistory = async (user: IRequestUser) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
   const payments = await prisma.paymentTransaction.findMany({
     where: {
       organizationId: user.organizationId,
@@ -157,8 +186,9 @@ const handleStripeWebhook = async (rawBody: Buffer, signature: string) => {
       },
     });
 
+    // Ignore unmatched test events safely
     if (!paymentTransaction) {
-      throw new AppError(status.NOT_FOUND, "Payment transaction not found");
+      return { received: true };
     }
 
     await prisma.$transaction(async (tx) => {
@@ -185,8 +215,6 @@ const handleStripeWebhook = async (rawBody: Buffer, signature: string) => {
     });
   }
 
-  console.log("strype event type=>", event.type);
-
   if (event.type === "payment_intent.payment_failed") {
     const paymentIntent = event.data.object;
 
@@ -212,6 +240,7 @@ const handleStripeWebhook = async (rawBody: Buffer, signature: string) => {
 };
 
 export const billingService = {
+  getBillingPlans,
   createPaymentIntent,
   getBillingStatus,
   getBillingHistory,

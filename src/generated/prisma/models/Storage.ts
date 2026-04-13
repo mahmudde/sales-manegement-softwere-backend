@@ -226,6 +226,7 @@ export type StorageWhereInput = {
   shop?: Prisma.XOR<Prisma.ShopScalarRelationFilter, Prisma.ShopWhereInput>
   inventories?: Prisma.InventoryListRelationFilter
   inventoryTxns?: Prisma.InventoryTransactionListRelationFilter
+  returns?: Prisma.SaleReturnListRelationFilter
 }
 
 export type StorageOrderByWithRelationInput = {
@@ -243,6 +244,7 @@ export type StorageOrderByWithRelationInput = {
   shop?: Prisma.ShopOrderByWithRelationInput
   inventories?: Prisma.InventoryOrderByRelationAggregateInput
   inventoryTxns?: Prisma.InventoryTransactionOrderByRelationAggregateInput
+  returns?: Prisma.SaleReturnOrderByRelationAggregateInput
 }
 
 export type StorageWhereUniqueInput = Prisma.AtLeast<{
@@ -264,6 +266,7 @@ export type StorageWhereUniqueInput = Prisma.AtLeast<{
   shop?: Prisma.XOR<Prisma.ShopScalarRelationFilter, Prisma.ShopWhereInput>
   inventories?: Prisma.InventoryListRelationFilter
   inventoryTxns?: Prisma.InventoryTransactionListRelationFilter
+  returns?: Prisma.SaleReturnListRelationFilter
 }, "id" | "shopId_name">
 
 export type StorageOrderByWithAggregationInput = {
@@ -311,6 +314,7 @@ export type StorageCreateInput = {
   shop: Prisma.ShopCreateNestedOneWithoutStoragesInput
   inventories?: Prisma.InventoryCreateNestedManyWithoutStorageInput
   inventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnCreateNestedManyWithoutStorageInput
 }
 
 export type StorageUncheckedCreateInput = {
@@ -326,6 +330,7 @@ export type StorageUncheckedCreateInput = {
   updatedAt?: Date | string
   inventories?: Prisma.InventoryUncheckedCreateNestedManyWithoutStorageInput
   inventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutStorageInput
 }
 
 export type StorageUpdateInput = {
@@ -341,6 +346,7 @@ export type StorageUpdateInput = {
   shop?: Prisma.ShopUpdateOneRequiredWithoutStoragesNestedInput
   inventories?: Prisma.InventoryUpdateManyWithoutStorageNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageUncheckedUpdateInput = {
@@ -356,6 +362,7 @@ export type StorageUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventories?: Prisma.InventoryUncheckedUpdateManyWithoutStorageNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageCreateManyInput = {
@@ -528,6 +535,20 @@ export type StorageUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.StorageScalarWhereInput | Prisma.StorageScalarWhereInput[]
 }
 
+export type StorageCreateNestedOneWithoutReturnsInput = {
+  create?: Prisma.XOR<Prisma.StorageCreateWithoutReturnsInput, Prisma.StorageUncheckedCreateWithoutReturnsInput>
+  connectOrCreate?: Prisma.StorageCreateOrConnectWithoutReturnsInput
+  connect?: Prisma.StorageWhereUniqueInput
+}
+
+export type StorageUpdateOneRequiredWithoutReturnsNestedInput = {
+  create?: Prisma.XOR<Prisma.StorageCreateWithoutReturnsInput, Prisma.StorageUncheckedCreateWithoutReturnsInput>
+  connectOrCreate?: Prisma.StorageCreateOrConnectWithoutReturnsInput
+  upsert?: Prisma.StorageUpsertWithoutReturnsInput
+  connect?: Prisma.StorageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StorageUpdateToOneWithWhereWithoutReturnsInput, Prisma.StorageUpdateWithoutReturnsInput>, Prisma.StorageUncheckedUpdateWithoutReturnsInput>
+}
+
 export type StorageCreateNestedManyWithoutShopInput = {
   create?: Prisma.XOR<Prisma.StorageCreateWithoutShopInput, Prisma.StorageUncheckedCreateWithoutShopInput> | Prisma.StorageCreateWithoutShopInput[] | Prisma.StorageUncheckedCreateWithoutShopInput[]
   connectOrCreate?: Prisma.StorageCreateOrConnectWithoutShopInput | Prisma.StorageCreateOrConnectWithoutShopInput[]
@@ -582,6 +603,7 @@ export type StorageCreateWithoutInventoriesInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutStoragesInput
   shop: Prisma.ShopCreateNestedOneWithoutStoragesInput
   inventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnCreateNestedManyWithoutStorageInput
 }
 
 export type StorageUncheckedCreateWithoutInventoriesInput = {
@@ -596,6 +618,7 @@ export type StorageUncheckedCreateWithoutInventoriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   inventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutStorageInput
 }
 
 export type StorageCreateOrConnectWithoutInventoriesInput = {
@@ -626,6 +649,7 @@ export type StorageUpdateWithoutInventoriesInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutStoragesNestedInput
   shop?: Prisma.ShopUpdateOneRequiredWithoutStoragesNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageUncheckedUpdateWithoutInventoriesInput = {
@@ -640,6 +664,7 @@ export type StorageUncheckedUpdateWithoutInventoriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageCreateWithoutInventoryTxnsInput = {
@@ -654,6 +679,7 @@ export type StorageCreateWithoutInventoryTxnsInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutStoragesInput
   shop: Prisma.ShopCreateNestedOneWithoutStoragesInput
   inventories?: Prisma.InventoryCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnCreateNestedManyWithoutStorageInput
 }
 
 export type StorageUncheckedCreateWithoutInventoryTxnsInput = {
@@ -668,6 +694,7 @@ export type StorageUncheckedCreateWithoutInventoryTxnsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   inventories?: Prisma.InventoryUncheckedCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutStorageInput
 }
 
 export type StorageCreateOrConnectWithoutInventoryTxnsInput = {
@@ -698,6 +725,7 @@ export type StorageUpdateWithoutInventoryTxnsInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutStoragesNestedInput
   shop?: Prisma.ShopUpdateOneRequiredWithoutStoragesNestedInput
   inventories?: Prisma.InventoryUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageUncheckedUpdateWithoutInventoryTxnsInput = {
@@ -712,6 +740,7 @@ export type StorageUncheckedUpdateWithoutInventoryTxnsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventories?: Prisma.InventoryUncheckedUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageCreateWithoutOrganizationInput = {
@@ -726,6 +755,7 @@ export type StorageCreateWithoutOrganizationInput = {
   shop: Prisma.ShopCreateNestedOneWithoutStoragesInput
   inventories?: Prisma.InventoryCreateNestedManyWithoutStorageInput
   inventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnCreateNestedManyWithoutStorageInput
 }
 
 export type StorageUncheckedCreateWithoutOrganizationInput = {
@@ -740,6 +770,7 @@ export type StorageUncheckedCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
   inventories?: Prisma.InventoryUncheckedCreateNestedManyWithoutStorageInput
   inventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutStorageInput
 }
 
 export type StorageCreateOrConnectWithoutOrganizationInput = {
@@ -784,6 +815,82 @@ export type StorageScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Storage"> | Date | string
 }
 
+export type StorageCreateWithoutReturnsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  status?: $Enums.StorageStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutStoragesInput
+  shop: Prisma.ShopCreateNestedOneWithoutStoragesInput
+  inventories?: Prisma.InventoryCreateNestedManyWithoutStorageInput
+  inventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutStorageInput
+}
+
+export type StorageUncheckedCreateWithoutReturnsInput = {
+  id?: string
+  organizationId: string
+  shopId: string
+  name: string
+  description?: string | null
+  status?: $Enums.StorageStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventories?: Prisma.InventoryUncheckedCreateNestedManyWithoutStorageInput
+  inventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutStorageInput
+}
+
+export type StorageCreateOrConnectWithoutReturnsInput = {
+  where: Prisma.StorageWhereUniqueInput
+  create: Prisma.XOR<Prisma.StorageCreateWithoutReturnsInput, Prisma.StorageUncheckedCreateWithoutReturnsInput>
+}
+
+export type StorageUpsertWithoutReturnsInput = {
+  update: Prisma.XOR<Prisma.StorageUpdateWithoutReturnsInput, Prisma.StorageUncheckedUpdateWithoutReturnsInput>
+  create: Prisma.XOR<Prisma.StorageCreateWithoutReturnsInput, Prisma.StorageUncheckedCreateWithoutReturnsInput>
+  where?: Prisma.StorageWhereInput
+}
+
+export type StorageUpdateToOneWithWhereWithoutReturnsInput = {
+  where?: Prisma.StorageWhereInput
+  data: Prisma.XOR<Prisma.StorageUpdateWithoutReturnsInput, Prisma.StorageUncheckedUpdateWithoutReturnsInput>
+}
+
+export type StorageUpdateWithoutReturnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumStorageStatusFieldUpdateOperationsInput | $Enums.StorageStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutStoragesNestedInput
+  shop?: Prisma.ShopUpdateOneRequiredWithoutStoragesNestedInput
+  inventories?: Prisma.InventoryUpdateManyWithoutStorageNestedInput
+  inventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutStorageNestedInput
+}
+
+export type StorageUncheckedUpdateWithoutReturnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  shopId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumStorageStatusFieldUpdateOperationsInput | $Enums.StorageStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventories?: Prisma.InventoryUncheckedUpdateManyWithoutStorageNestedInput
+  inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutStorageNestedInput
+}
+
 export type StorageCreateWithoutShopInput = {
   id?: string
   name: string
@@ -796,6 +903,7 @@ export type StorageCreateWithoutShopInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutStoragesInput
   inventories?: Prisma.InventoryCreateNestedManyWithoutStorageInput
   inventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnCreateNestedManyWithoutStorageInput
 }
 
 export type StorageUncheckedCreateWithoutShopInput = {
@@ -810,6 +918,7 @@ export type StorageUncheckedCreateWithoutShopInput = {
   updatedAt?: Date | string
   inventories?: Prisma.InventoryUncheckedCreateNestedManyWithoutStorageInput
   inventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutStorageInput
+  returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutStorageInput
 }
 
 export type StorageCreateOrConnectWithoutShopInput = {
@@ -862,6 +971,7 @@ export type StorageUpdateWithoutOrganizationInput = {
   shop?: Prisma.ShopUpdateOneRequiredWithoutStoragesNestedInput
   inventories?: Prisma.InventoryUpdateManyWithoutStorageNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageUncheckedUpdateWithoutOrganizationInput = {
@@ -876,6 +986,7 @@ export type StorageUncheckedUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventories?: Prisma.InventoryUncheckedUpdateManyWithoutStorageNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageUncheckedUpdateManyWithoutOrganizationInput = {
@@ -914,6 +1025,7 @@ export type StorageUpdateWithoutShopInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutStoragesNestedInput
   inventories?: Prisma.InventoryUpdateManyWithoutStorageNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageUncheckedUpdateWithoutShopInput = {
@@ -928,6 +1040,7 @@ export type StorageUncheckedUpdateWithoutShopInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventories?: Prisma.InventoryUncheckedUpdateManyWithoutStorageNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutStorageNestedInput
+  returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutStorageNestedInput
 }
 
 export type StorageUncheckedUpdateManyWithoutShopInput = {
@@ -950,11 +1063,13 @@ export type StorageUncheckedUpdateManyWithoutShopInput = {
 export type StorageCountOutputType = {
   inventories: number
   inventoryTxns: number
+  returns: number
 }
 
 export type StorageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   inventories?: boolean | StorageCountOutputTypeCountInventoriesArgs
   inventoryTxns?: boolean | StorageCountOutputTypeCountInventoryTxnsArgs
+  returns?: boolean | StorageCountOutputTypeCountReturnsArgs
 }
 
 /**
@@ -981,6 +1096,13 @@ export type StorageCountOutputTypeCountInventoryTxnsArgs<ExtArgs extends runtime
   where?: Prisma.InventoryTransactionWhereInput
 }
 
+/**
+ * StorageCountOutputType without action
+ */
+export type StorageCountOutputTypeCountReturnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SaleReturnWhereInput
+}
+
 
 export type StorageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -997,6 +1119,7 @@ export type StorageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   shop?: boolean | Prisma.ShopDefaultArgs<ExtArgs>
   inventories?: boolean | Prisma.Storage$inventoriesArgs<ExtArgs>
   inventoryTxns?: boolean | Prisma.Storage$inventoryTxnsArgs<ExtArgs>
+  returns?: boolean | Prisma.Storage$returnsArgs<ExtArgs>
   _count?: boolean | Prisma.StorageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["storage"]>
 
@@ -1049,6 +1172,7 @@ export type StorageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   shop?: boolean | Prisma.ShopDefaultArgs<ExtArgs>
   inventories?: boolean | Prisma.Storage$inventoriesArgs<ExtArgs>
   inventoryTxns?: boolean | Prisma.Storage$inventoryTxnsArgs<ExtArgs>
+  returns?: boolean | Prisma.Storage$returnsArgs<ExtArgs>
   _count?: boolean | Prisma.StorageCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StorageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1067,6 +1191,7 @@ export type $StoragePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     shop: Prisma.$ShopPayload<ExtArgs>
     inventories: Prisma.$InventoryPayload<ExtArgs>[]
     inventoryTxns: Prisma.$InventoryTransactionPayload<ExtArgs>[]
+    returns: Prisma.$SaleReturnPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1477,6 +1602,7 @@ export interface Prisma__StorageClient<T, Null = never, ExtArgs extends runtime.
   shop<T extends Prisma.ShopDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ShopDefaultArgs<ExtArgs>>): Prisma.Prisma__ShopClient<runtime.Types.Result.GetResult<Prisma.$ShopPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   inventories<T extends Prisma.Storage$inventoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Storage$inventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   inventoryTxns<T extends Prisma.Storage$inventoryTxnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Storage$inventoryTxnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  returns<T extends Prisma.Storage$returnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Storage$returnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1962,6 +2088,30 @@ export type Storage$inventoryTxnsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.InventoryTransactionScalarFieldEnum | Prisma.InventoryTransactionScalarFieldEnum[]
+}
+
+/**
+ * Storage.returns
+ */
+export type Storage$returnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SaleReturn
+   */
+  select?: Prisma.SaleReturnSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SaleReturn
+   */
+  omit?: Prisma.SaleReturnOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SaleReturnInclude<ExtArgs> | null
+  where?: Prisma.SaleReturnWhereInput
+  orderBy?: Prisma.SaleReturnOrderByWithRelationInput | Prisma.SaleReturnOrderByWithRelationInput[]
+  cursor?: Prisma.SaleReturnWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SaleReturnScalarFieldEnum | Prisma.SaleReturnScalarFieldEnum[]
 }
 
 /**

@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { authController } from "./auth.controller";
 import { checkAuth } from "../../middlewWire/checkAuth";
-
 import {
   changePasswordValidationSchema,
   forgotPasswordValidationSchema,
@@ -33,6 +32,7 @@ router.get(
     OrgRole.ORG_ADMIN,
     OrgRole.SHOP_ADMIN,
     OrgRole.STAFF,
+    { allowWithoutSubscription: true },
   ),
   authController.getMe,
 );
@@ -46,6 +46,7 @@ router.post(
     OrgRole.ORG_ADMIN,
     OrgRole.SHOP_ADMIN,
     OrgRole.STAFF,
+    { allowWithoutSubscription: true },
   ),
   validateRequest(changePasswordValidationSchema),
   authController.changePassword,
@@ -58,6 +59,7 @@ router.post(
     OrgRole.ORG_ADMIN,
     OrgRole.SHOP_ADMIN,
     OrgRole.STAFF,
+    { allowWithoutSubscription: true },
   ),
   authController.logOutUser,
 );

@@ -2,11 +2,17 @@ import status from "http-status";
 
 import AppError from "../../errorHelper/AppError";
 import { IRequestUser } from "../auth/auth.interface";
-import { ICreateSalePayload } from "./sale.interface";
+import {
+  IAddSalePaymentPayload,
+  ICancelSalePayload,
+  ICreateSalePayload,
+} from "./sale.interface";
 import { prisma } from "../../lib/prisma";
 import {
   InventoryTransactionType,
   Prisma,
+  SalePaymentStatus,
+  SaleStatus,
 } from "../../../generated/prisma/client";
 import {
   saleFilterableFields,
@@ -74,8 +80,13 @@ const createSale = async (user: IRequestUser, payload: ICreateSalePayload) => {
     paymentMethod,
     discount = 0,
     note,
+    paidAmount = 0,
     items,
   } = payload;
+
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
 
   await validateSaleReferences(user.organizationId, shopId, storageId);
 
@@ -159,11 +170,32 @@ const createSale = async (user: IRequestUser, payload: ICreateSalePayload) => {
     throw new AppError(status.BAD_REQUEST, "Discount cannot exceed subtotal");
   }
 
+  if (paidAmount < 0) {
+    throw new AppError(status.BAD_REQUEST, "Paid amount cannot be negative");
+  }
+
+  if (paidAmount > total) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Paid amount cannot exceed total amount",
+    );
+  }
+
+  const dueAmount = total - paidAmount;
+
+  let paymentStatus: SalePaymentStatus = SalePaymentStatus.PAID;
+
+  if (paidAmount === 0) {
+    paymentStatus = SalePaymentStatus.UNPAID;
+  } else if (dueAmount > 0) {
+    paymentStatus = SalePaymentStatus.PARTIAL;
+  }
+
   const sale = await prisma.$transaction(
     async (tx: Prisma.TransactionClient) => {
       const createdSale = await tx.sale.create({
         data: {
-          organizationId: user.organizationId,
+          organizationId: user.organizationId!,
           shopId,
           createdById: user.userId,
           invoiceNo,
@@ -171,6 +203,9 @@ const createSale = async (user: IRequestUser, payload: ICreateSalePayload) => {
           discount: new Prisma.Decimal(discount),
           total: new Prisma.Decimal(total),
           paymentMethod,
+          paymentStatus,
+          paidAmount: new Prisma.Decimal(paidAmount),
+          dueAmount: new Prisma.Decimal(dueAmount),
           note,
         },
       });
@@ -205,7 +240,7 @@ const createSale = async (user: IRequestUser, payload: ICreateSalePayload) => {
 
         await tx.inventoryTransaction.create({
           data: {
-            organizationId: user.organizationId,
+            organizationId: user.organizationId!,
             shopId,
             storageId,
             productId: item.productId,
@@ -214,6 +249,18 @@ const createSale = async (user: IRequestUser, payload: ICreateSalePayload) => {
             quantity: item.quantity,
             note: `Sale invoice: ${invoiceNo}`,
             saleId: createdSale.id,
+          },
+        });
+      }
+
+      if (paidAmount > 0) {
+        await tx.salePayment.create({
+          data: {
+            saleId: createdSale.id,
+            receivedById: user.userId,
+            amount: new Prisma.Decimal(paidAmount),
+            paymentMethod,
+            note: "Initial payment collected during sale creation",
           },
         });
       }
@@ -238,13 +285,166 @@ const createSale = async (user: IRequestUser, payload: ICreateSalePayload) => {
           },
         },
       },
+      payments: {
+        include: {
+          receivedBy: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
 
   return saleWithDetails;
 };
 
+const addSalePayment = async (
+  user: IRequestUser,
+  saleId: string,
+  payload: IAddSalePaymentPayload,
+) => {
+  const { amount, paymentMethod, note } = payload;
+
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
+  const sale = await prisma.sale.findFirst({
+    where: {
+      id: saleId,
+      organizationId: user.organizationId,
+    },
+  });
+
+  if (!sale) {
+    throw new AppError(status.NOT_FOUND, "Sale not found");
+  }
+
+  const currentDue = Number(sale.dueAmount);
+
+  if (currentDue <= 0) {
+    throw new AppError(status.BAD_REQUEST, "This sale has no due amount");
+  }
+
+  if (amount > currentDue) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Payment amount cannot exceed due amount",
+    );
+  }
+
+  if (sale.status === SaleStatus.CANCELLED) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot collect payment for a cancelled sale",
+    );
+  }
+
+  const updatedPaidAmount = Number(sale.paidAmount) + amount;
+  const updatedDueAmount = Number(sale.total) - updatedPaidAmount;
+
+  const updatedPaymentStatus =
+    updatedDueAmount <= 0
+      ? SalePaymentStatus.PAID
+      : updatedPaidAmount > 0
+        ? SalePaymentStatus.PARTIAL
+        : SalePaymentStatus.UNPAID;
+
+  const result = await prisma.$transaction(
+    async (tx: Prisma.TransactionClient) => {
+      await tx.salePayment.create({
+        data: {
+          saleId: sale.id,
+          receivedById: user.userId,
+          amount: new Prisma.Decimal(amount),
+          paymentMethod,
+          note,
+        },
+      });
+
+      const updatedSale = await tx.sale.update({
+        where: {
+          id: sale.id,
+        },
+        data: {
+          paidAmount: new Prisma.Decimal(updatedPaidAmount),
+          dueAmount: new Prisma.Decimal(updatedDueAmount),
+          paymentStatus: updatedPaymentStatus,
+        },
+        include: {
+          shop: true,
+          createdBy: true,
+          items: {
+            include: {
+              product: true,
+            },
+          },
+          payments: {
+            include: {
+              receivedBy: true,
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+          },
+        },
+      });
+
+      return updatedSale;
+    },
+  );
+
+  return result;
+};
+
+const getSalePayments = async (user: IRequestUser, saleId: string) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
+  const sale = await prisma.sale.findFirst({
+    where: {
+      id: saleId,
+      organizationId: user.organizationId,
+    },
+    select: {
+      id: true,
+      invoiceNo: true,
+      total: true,
+      paidAmount: true,
+      dueAmount: true,
+      paymentStatus: true,
+    },
+  });
+
+  if (!sale) {
+    throw new AppError(status.NOT_FOUND, "Sale not found");
+  }
+
+  const payments = await prisma.salePayment.findMany({
+    where: {
+      saleId,
+    },
+    include: {
+      receivedBy: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return {
+    sale,
+    payments,
+  };
+};
+
 const getAllSales = async (user: IRequestUser, query: IQueryParams) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
   const queryBuilder = new QueryBuilder(prisma.sale, query, {
     searchableFields: saleSearchableFields,
     filterableFields: saleFilterableFields,
@@ -268,6 +468,7 @@ const getAllSales = async (user: IRequestUser, query: IQueryParams) => {
           product: true,
         },
       },
+      payments: true,
     })
     .where({
       organizationId: user.organizationId,
@@ -278,6 +479,10 @@ const getAllSales = async (user: IRequestUser, query: IQueryParams) => {
 };
 
 const getSingleSale = async (user: IRequestUser, saleId: string) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
   const sale = await prisma.sale.findFirst({
     where: {
       id: saleId,
@@ -295,6 +500,14 @@ const getSingleSale = async (user: IRequestUser, saleId: string) => {
           },
         },
       },
+      payments: {
+        include: {
+          receivedBy: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
 
@@ -305,8 +518,151 @@ const getSingleSale = async (user: IRequestUser, saleId: string) => {
   return sale;
 };
 
+const cancelSale = async (
+  user: IRequestUser,
+  saleId: string,
+  payload: ICancelSalePayload,
+) => {
+  const { note } = payload;
+
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
+  const sale = await prisma.sale.findFirst({
+    where: {
+      id: saleId,
+      organizationId: user.organizationId,
+    },
+    include: {
+      items: true,
+      returns: {
+        include: {
+          items: true,
+        },
+      },
+    },
+  });
+
+  if (!sale) {
+    throw new AppError(status.NOT_FOUND, "Sale not found");
+  }
+
+  if (sale.status === SaleStatus.CANCELLED) {
+    throw new AppError(status.BAD_REQUEST, "Sale is already cancelled");
+  }
+
+  if (sale.returns.length > 0) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot cancel a sale that already has return records",
+    );
+  }
+
+  const result = await prisma.$transaction(
+    async (tx: Prisma.TransactionClient) => {
+      for (const item of sale.items) {
+        const inventory = await tx.inventory.findFirst({
+          where: {
+            organizationId: user.organizationId!,
+            shopId: sale.shopId,
+            productId: item.productId,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+
+        if (inventory) {
+          await tx.inventory.update({
+            where: {
+              id: inventory.id,
+            },
+            data: {
+              quantity: {
+                increment: item.quantity,
+              },
+            },
+          });
+
+          await tx.inventoryTransaction.create({
+            data: {
+              organizationId: user.organizationId!,
+              shopId: sale.shopId,
+              storageId: inventory.storageId,
+              productId: item.productId,
+              createdById: user.userId,
+              type: InventoryTransactionType.STOCK_IN,
+              quantity: item.quantity,
+              note: `Sale cancelled: ${sale.invoiceNo}`,
+              saleId: sale.id,
+            },
+          });
+        } else {
+          throw new AppError(
+            status.BAD_REQUEST,
+            "Related inventory not found for sale item restoration",
+          );
+        }
+      }
+
+      const updatedSale = await tx.sale.update({
+        where: {
+          id: sale.id,
+        },
+        data: {
+          status: SaleStatus.CANCELLED,
+          paymentStatus: SalePaymentStatus.UNPAID,
+          paidAmount: new Prisma.Decimal(0),
+          dueAmount: new Prisma.Decimal(0),
+          note: note
+            ? `${sale.note ? `${sale.note}\n\n` : ""}Cancellation note: ${note}`
+            : sale.note,
+        },
+        include: {
+          shop: true,
+          createdBy: true,
+          items: {
+            include: {
+              product: true,
+            },
+          },
+          payments: {
+            include: {
+              receivedBy: true,
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+          },
+          returns: {
+            include: {
+              returnedBy: true,
+              items: {
+                include: {
+                  product: true,
+                },
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+          },
+        },
+      });
+
+      return updatedSale;
+    },
+  );
+
+  return result;
+};
+
 export const saleService = {
   createSale,
+  addSalePayment,
+  getSalePayments,
   getAllSales,
   getSingleSale,
+  cancelSale,
 };

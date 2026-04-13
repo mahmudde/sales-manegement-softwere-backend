@@ -117,6 +117,21 @@ export type Organization = Prisma.OrganizationModel
  */
 export type OrganizationMember = Prisma.OrganizationMemberModel
 /**
+ * Model SalePayment
+ * 
+ */
+export type SalePayment = Prisma.SalePaymentModel
+/**
+ * Model SaleReturn
+ * 
+ */
+export type SaleReturn = Prisma.SaleReturnModel
+/**
+ * Model SaleReturnItem
+ * 
+ */
+export type SaleReturnItem = Prisma.SaleReturnItemModel
+/**
  * Model Sale
  * 
  */

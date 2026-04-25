@@ -105,10 +105,30 @@ const updateShopStatus = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteShop = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+
+  const result = await shopService.deleteShop(user, id as string);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Shop deleted successfully",
+    data: result,
+  });
+});
+
 export const shopController = {
   createShop,
   getAllShops,
   getSingleShop,
   updateShop,
   updateShopStatus,
+  deleteShop,
 };

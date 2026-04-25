@@ -36,19 +36,20 @@ const generateUniqueProductSlug = async (
 
   while (true) {
     const existingProduct = await prisma.product.findFirst({
-      where: {
-        organizationId,
-        slug,
-      },
+      where: { organizationId, slug },
     });
 
-    if (!existingProduct) {
-      return slug;
-    }
+    if (!existingProduct) return slug;
 
-    slug = `${baseSlug}-${counter}`;
-    counter++;
+    slug = `${baseSlug}-${counter++}`;
   }
+};
+
+const ensureOrg = (user: IRequestUser): string => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+  return user.organizationId;
 };
 
 const createProduct = async (
@@ -56,10 +57,12 @@ const createProduct = async (
   payload: ICreateProductPayload,
   file?: Express.Multer.File,
 ) => {
+  const organizationId = ensureOrg(user);
+
   const category = await prisma.category.findFirst({
     where: {
       id: payload.categoryId,
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     },
   });
@@ -70,7 +73,7 @@ const createProduct = async (
 
   const existingSkuProduct = await prisma.product.findFirst({
     where: {
-      organizationId: user.organizationId,
+      organizationId,
       sku: payload.sku,
     },
   });
@@ -79,27 +82,13 @@ const createProduct = async (
     throw new AppError(status.CONFLICT, "Product already exists with this SKU");
   }
 
-  const slug = await generateUniqueProductSlug(
-    user.organizationId,
-    payload.name,
-  );
+  const slug = await generateUniqueProductSlug(organizationId, payload.name);
 
-  const uploadedFile = file as Express.Multer.File & {
-    path?: string;
-    filename?: string;
-  };
-
-  console.log("service file =>", uploadedFile);
-
-  const imageUrl = uploadedFile?.path ?? null;
-
-  console.log("from product service", imageUrl);
-
-  console.log("imageUrl =>", imageUrl);
+  const imageUrl = file?.path ?? null;
 
   const product = await prisma.product.create({
     data: {
-      organizationId: user.organizationId,
+      organizationId,
       categoryId: payload.categoryId,
       name: payload.name,
       slug,
@@ -117,6 +106,8 @@ const createProduct = async (
 };
 
 const getAllProducts = async (user: IRequestUser, query: IQueryParams) => {
+  const organizationId = ensureOrg(user);
+
   const queryBuilder = new QueryBuilder(prisma.product, query, {
     searchableFields: productSearchableFields,
     filterableFields: productFilterableFields,
@@ -127,33 +118,29 @@ const getAllProducts = async (user: IRequestUser, query: IQueryParams) => {
     maxLimit: 100,
   });
 
-  const result = await queryBuilder
+  return await queryBuilder
     .search()
     .filter()
     .sort()
     .paginate()
-    .include({
-      category: true,
-    })
+    .include({ category: true })
     .where({
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     })
     .execute();
-
-  return result;
 };
 
 const getSingleProduct = async (user: IRequestUser, productId: string) => {
+  const organizationId = ensureOrg(user);
+
   const product = await prisma.product.findFirst({
     where: {
       id: productId,
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     },
-    include: {
-      category: true,
-    },
+    include: { category: true },
   });
 
   if (!product) {
@@ -169,24 +156,22 @@ const updateProduct = async (
   payload: IUpdateProductPayload,
   file?: Express.Multer.File,
 ) => {
+  const organizationId = ensureOrg(user);
+
   const existingProduct = await prisma.product.findFirst({
     where: {
       id: productId,
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     },
-    include: {
-      category: true,
-    },
+    include: { category: true },
   });
 
   if (!existingProduct) {
     throw new AppError(status.NOT_FOUND, "Product not found");
   }
 
-  const hasAnyUpdateField = Object.keys(payload).length > 0 || !!file;
-
-  if (!hasAnyUpdateField) {
+  if (!Object.keys(payload).length && !file) {
     throw new AppError(status.BAD_REQUEST, "No update data provided");
   }
 
@@ -194,7 +179,7 @@ const updateProduct = async (
     const category = await prisma.category.findFirst({
       where: {
         id: payload.categoryId,
-        organizationId: user.organizationId,
+        organizationId,
         isDeleted: false,
       },
     });
@@ -205,17 +190,15 @@ const updateProduct = async (
   }
 
   if (payload.sku && payload.sku !== existingProduct.sku) {
-    const duplicateSkuProduct = await prisma.product.findFirst({
+    const duplicate = await prisma.product.findFirst({
       where: {
-        organizationId: user.organizationId,
+        organizationId,
         sku: payload.sku,
-        NOT: {
-          id: existingProduct.id,
-        },
+        NOT: { id: existingProduct.id },
       },
     });
 
-    if (duplicateSkuProduct) {
+    if (duplicate) {
       throw new AppError(
         status.CONFLICT,
         "Product already exists with this SKU",
@@ -224,31 +207,23 @@ const updateProduct = async (
   }
 
   let slug = existingProduct.slug;
-
   if (payload.name && payload.name !== existingProduct.name) {
-    slug = await generateUniqueProductSlug(user.organizationId, payload.name);
+    slug = await generateUniqueProductSlug(organizationId, payload.name);
   }
 
   const newImageUrl = file?.path ?? existingProduct.image ?? undefined;
 
   const updatedProduct = await prisma.product.update({
-    where: {
-      id: existingProduct.id,
-    },
+    where: { id: existingProduct.id },
     data: {
-      name: payload.name,
-      categoryId: payload.categoryId,
-      sku: payload.sku,
-      description: payload.description,
-      image: newImageUrl,
+      ...payload,
       slug,
+      image: newImageUrl,
       ...(payload.price !== undefined && {
         price: new Prisma.Decimal(payload.price),
       }),
     },
-    include: {
-      category: true,
-    },
+    include: { category: true },
   });
 
   if (
@@ -267,10 +242,12 @@ const updateProductStatus = async (
   productId: string,
   payload: IUpdateProductStatusPayload,
 ) => {
+  const organizationId = ensureOrg(user);
+
   const existingProduct = await prisma.product.findFirst({
     where: {
       id: productId,
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     },
   });
@@ -279,19 +256,48 @@ const updateProductStatus = async (
     throw new AppError(status.NOT_FOUND, "Product not found");
   }
 
-  const updatedProduct = await prisma.product.update({
+  return await prisma.product.update({
+    where: { id: existingProduct.id },
+    data: {
+      status: payload.status as ProductStatus,
+    },
+    include: { category: true },
+  });
+};
+
+const deleteProduct = async (user: IRequestUser, productId: string) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
+  const organizationId = user.organizationId;
+
+  const existingProduct = await prisma.product.findFirst({
+    where: {
+      id: productId,
+      organizationId,
+      isDeleted: false,
+    },
+  });
+
+  if (!existingProduct) {
+    throw new AppError(status.NOT_FOUND, "Product not found");
+  }
+
+  const deletedProduct = await prisma.product.update({
     where: {
       id: existingProduct.id,
     },
     data: {
-      status: payload.status as ProductStatus,
-    },
-    include: {
-      category: true,
+      isDeleted: true,
     },
   });
 
-  return updatedProduct;
+  if (existingProduct.image) {
+    await deleteFileFromCloudinary(existingProduct.image);
+  }
+
+  return deletedProduct;
 };
 
 export const productService = {
@@ -300,4 +306,5 @@ export const productService = {
   getSingleProduct,
   updateProduct,
   updateProductStatus,
+  deleteProduct,
 };

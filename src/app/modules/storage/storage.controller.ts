@@ -103,10 +103,30 @@ const updateStorageStatus = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteStorage = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+
+  const result = await storageService.deleteStorage(user, id as string);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Storage deleted successfully",
+    data: result,
+  });
+});
+
 export const storageController = {
   createStorage,
   getAllStorages,
   getSingleStorage,
   updateStorage,
   updateStorageStatus,
+  deleteStorage,
 };

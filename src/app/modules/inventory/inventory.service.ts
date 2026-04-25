@@ -18,6 +18,13 @@ import {
 import { QueryBuilder } from "../../builder/QueryBuilder";
 import { IQueryParams } from "../../interfaces/query.interface";
 
+const ensureOrg = (user: IRequestUser): string => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+  return user.organizationId;
+};
+
 const validateInventoryReferences = async (
   organizationId: string,
   shopId: string,
@@ -75,7 +82,7 @@ const stockIn = async (user: IRequestUser, payload: IStockInPayload) => {
     payload;
 
   await validateInventoryReferences(
-    user.organizationId,
+    ensureOrg(user),
     shopId,
     storageId,
     productId,
@@ -85,7 +92,7 @@ const stockIn = async (user: IRequestUser, payload: IStockInPayload) => {
     async (tx: Prisma.TransactionClient) => {
       const existingInventory = await tx.inventory.findFirst({
         where: {
-          organizationId: user.organizationId,
+          organizationId: ensureOrg(user),
           shopId,
           storageId,
           productId,
@@ -109,7 +116,7 @@ const stockIn = async (user: IRequestUser, payload: IStockInPayload) => {
       } else {
         inventory = await tx.inventory.create({
           data: {
-            organizationId: user.organizationId,
+            organizationId: ensureOrg(user),
             shopId,
             storageId,
             productId,
@@ -121,7 +128,7 @@ const stockIn = async (user: IRequestUser, payload: IStockInPayload) => {
 
       await tx.inventoryTransaction.create({
         data: {
-          organizationId: user.organizationId,
+          organizationId: ensureOrg(user),
           shopId,
           storageId,
           productId,
@@ -143,7 +150,7 @@ const stockOut = async (user: IRequestUser, payload: IStockOutPayload) => {
   const { shopId, storageId, productId, quantity, note } = payload;
 
   await validateInventoryReferences(
-    user.organizationId,
+    ensureOrg(user),
     shopId,
     storageId,
     productId,
@@ -153,7 +160,7 @@ const stockOut = async (user: IRequestUser, payload: IStockOutPayload) => {
     async (tx: Prisma.TransactionClient) => {
       const existingInventory = await tx.inventory.findFirst({
         where: {
-          organizationId: user.organizationId,
+          organizationId: ensureOrg(user),
           shopId,
           storageId,
           productId,
@@ -184,7 +191,7 @@ const stockOut = async (user: IRequestUser, payload: IStockOutPayload) => {
 
       await tx.inventoryTransaction.create({
         data: {
-          organizationId: user.organizationId,
+          organizationId: ensureOrg(user),
           shopId,
           storageId,
           productId,
@@ -239,7 +246,7 @@ const getSingleInventory = async (user: IRequestUser, inventoryId: string) => {
   const inventory = await prisma.inventory.findFirst({
     where: {
       id: inventoryId,
-      organizationId: user.organizationId,
+      organizationId: ensureOrg(user),
     },
     include: {
       shop: true,

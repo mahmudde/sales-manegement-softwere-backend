@@ -59,4 +59,10 @@ router.patch(
   shopController.updateShopStatus,
 );
 
+router.delete(
+  "/:id",
+  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  shopController.deleteShop,
+);
+
 export const shopRoutes = router;

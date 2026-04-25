@@ -12,6 +12,7 @@ const getAccessToken = (payload: JwtPayload) => {
     envVars.ACCESS_TOKEN_SECRET,
     { expiresIn: envVars.ACCESS_TOKEN_EXPIRES_IN } as SignOptions,
   );
+
   return accessToken;
 };
 
@@ -21,36 +22,42 @@ const getRefreshToken = (payload: JwtPayload) => {
     envVars.REFRESH_TOKEN_SECRET,
     { expiresIn: envVars.REFRESH_TOKEN_EXPIRES_IN } as SignOptions,
   );
+
   return refreshToken;
 };
+
+const oneDay = 1000 * 60 * 60 * 24;
+const sevenDays = oneDay * 7;
+
+const cookieSecure = envVars.NODE_ENV === "production";
 
 const setAccessTokenCookie = (res: Response, token: string) => {
   cookieUtils.setCookie(res, "accessToken", token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: cookieSecure,
+    sameSite: cookieSecure ? "none" : "lax",
     path: "/",
-    maxAge: 60 * 60 * 60 * 24 * 1000,
+    maxAge: oneDay,
   });
 };
 
 const setRefreshTokenCookie = (res: Response, token: string) => {
   cookieUtils.setCookie(res, "refreshToken", token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: cookieSecure,
+    sameSite: cookieSecure ? "none" : "lax",
     path: "/",
-    maxAge: 60 * 60 * 60 * 24 * 1000 * 7,
+    maxAge: sevenDays,
   });
 };
 
 const setBetterAuthSessionCookie = (res: Response, token: string) => {
   cookieUtils.setCookie(res, "better-auth.session_token", token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: cookieSecure,
+    sameSite: cookieSecure ? "none" : "lax",
     path: "/",
-    maxAge: 60 * 60 * 60 * 24 * 1000,
+    maxAge: oneDay,
   });
 };
 

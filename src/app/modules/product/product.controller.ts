@@ -111,10 +111,30 @@ const updateProductStatus = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteProduct = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+
+  const result = await productService.deleteProduct(user, id as string);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Product deleted successfully",
+    data: result,
+  });
+});
+
 export const productController = {
   createProduct,
   getAllProducts,
   getSingleProduct,
   updateProduct,
   updateProductStatus,
+  deleteProduct,
 };

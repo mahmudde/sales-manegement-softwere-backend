@@ -17,6 +17,13 @@ import {
 import { QueryBuilder } from "../../builder/QueryBuilder";
 import { IQueryParams } from "../../interfaces/query.interface";
 
+const ensureOrg = (user: IRequestUser): string => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+  return user.organizationId;
+};
+
 const createStorage = async (
   user: IRequestUser,
   payload: ICreateStoragePayload,
@@ -24,7 +31,7 @@ const createStorage = async (
   const shop = await prisma.shop.findFirst({
     where: {
       id: payload.shopId,
-      organizationId: user.organizationId,
+      organizationId: ensureOrg(user),
       isDeleted: false,
     },
   });
@@ -50,7 +57,7 @@ const createStorage = async (
 
   const storage = await prisma.storage.create({
     data: {
-      organizationId: user.organizationId,
+      organizationId: ensureOrg(user),
       shopId: payload.shopId,
       name: payload.name,
       description: payload.description,
@@ -95,7 +102,7 @@ const getSingleStorage = async (user: IRequestUser, storageId: string) => {
   const storage = await prisma.storage.findFirst({
     where: {
       id: storageId,
-      organizationId: user.organizationId,
+      organizationId: ensureOrg(user),
       isDeleted: false,
     },
     include: {
@@ -118,7 +125,7 @@ const updateStorage = async (
   const existingStorage = await prisma.storage.findFirst({
     where: {
       id: storageId,
-      organizationId: user.organizationId,
+      organizationId: ensureOrg(user),
       isDeleted: false,
     },
   });
@@ -139,7 +146,7 @@ const updateStorage = async (
     const shop = await prisma.shop.findFirst({
       where: {
         id: payload.shopId,
-        organizationId: user.organizationId,
+        organizationId: ensureOrg(user),
         isDeleted: false,
       },
     });
@@ -199,7 +206,7 @@ const updateStorageStatus = async (
   const existingStorage = await prisma.storage.findFirst({
     where: {
       id: storageId,
-      organizationId: user.organizationId,
+      organizationId: ensureOrg(user),
       isDeleted: false,
     },
   });
@@ -223,10 +230,99 @@ const updateStorageStatus = async (
   return updatedStorage;
 };
 
+const deleteStorage = async (user: IRequestUser, storageId: string) => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+
+  const organizationId = user.organizationId;
+
+  const existingStorage = await prisma.storage.findFirst({
+    where: {
+      id: storageId,
+      organizationId,
+      isDeleted: false,
+    },
+  });
+
+  if (!existingStorage) {
+    throw new AppError(status.NOT_FOUND, "Storage not found");
+  }
+
+  const relatedInventoryExists = await prisma.inventory.findFirst({
+    where: {
+      storageId: existingStorage.id,
+      organizationId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (relatedInventoryExists) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot delete storage because inventory exists in this storage",
+    );
+  }
+
+  const relatedInventoryTxnExists = await prisma.inventoryTransaction.findFirst(
+    {
+      where: {
+        storageId: existingStorage.id,
+        organizationId,
+      },
+      select: {
+        id: true,
+      },
+    },
+  );
+
+  if (relatedInventoryTxnExists) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot delete storage because inventory transactions exist for this storage",
+    );
+  }
+
+  const relatedSaleReturnExists = await prisma.saleReturn.findFirst({
+    where: {
+      storageId: existingStorage.id,
+      organizationId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (relatedSaleReturnExists) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot delete storage because sale returns exist for this storage",
+    );
+  }
+
+  const deletedStorage = await prisma.storage.update({
+    where: {
+      id: existingStorage.id,
+    },
+    data: {
+      isDeleted: true,
+      deletedAt: new Date(),
+    },
+    include: {
+      shop: true,
+    },
+  });
+
+  return deletedStorage;
+};
+
 export const storageService = {
   createStorage,
   getAllStorages,
   getSingleStorage,
   updateStorage,
   updateStorageStatus,
+  deleteStorage,
 };

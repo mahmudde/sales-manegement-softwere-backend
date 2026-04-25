@@ -1,8 +1,6 @@
 import { app } from "./app";
 import { envVars } from "./app/config/env";
 
-// Start the server
-
 const bootstrap = () => {
   try {
     app.listen(envVars.PORT, () => {
@@ -12,4 +10,5 @@ const bootstrap = () => {
     console.log(error);
   }
 };
+
 bootstrap();

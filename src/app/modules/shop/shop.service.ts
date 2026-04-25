@@ -25,6 +25,13 @@ const generateSlug = (value: string) =>
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
 
+const ensureOrg = (user: IRequestUser): string => {
+  if (!user.organizationId) {
+    throw new AppError(status.BAD_REQUEST, "Organization context is missing");
+  }
+  return user.organizationId;
+};
+
 const generateUniqueShopSlug = async (
   organizationId: string,
   shopName: string,
@@ -55,7 +62,9 @@ const createShop = async (
   payload: ICreateShopPayload,
   file?: Express.Multer.File,
 ) => {
-  const slug = await generateUniqueShopSlug(user.organizationId, payload.name);
+  const organizationId = ensureOrg(user);
+
+  const slug = await generateUniqueShopSlug(organizationId, payload.name);
 
   const uploadedFile = file as Express.Multer.File & {
     path?: string;
@@ -66,7 +75,7 @@ const createShop = async (
 
   const shop = await prisma.shop.create({
     data: {
-      organizationId: user.organizationId,
+      organizationId,
       name: payload.name,
       slug,
       email: payload.email,
@@ -80,6 +89,8 @@ const createShop = async (
 };
 
 const getAllShops = async (user: IRequestUser, query: IQueryParams) => {
+  const organizationId = ensureOrg(user);
+
   const queryBuilder = new QueryBuilder(prisma.shop, query, {
     searchableFields: shopSearchableFields,
     filterableFields: shopFilterableFields,
@@ -96,7 +107,7 @@ const getAllShops = async (user: IRequestUser, query: IQueryParams) => {
     .sort()
     .paginate()
     .where({
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     })
     .execute();
@@ -105,10 +116,12 @@ const getAllShops = async (user: IRequestUser, query: IQueryParams) => {
 };
 
 const getSingleShop = async (user: IRequestUser, shopId: string) => {
+  const organizationId = ensureOrg(user);
+
   const shop = await prisma.shop.findFirst({
     where: {
       id: shopId,
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     },
   });
@@ -126,10 +139,12 @@ const updateShop = async (
   payload: IUpdateShopPayload,
   file?: Express.Multer.File,
 ) => {
+  const organizationId = ensureOrg(user);
+
   const existingShop = await prisma.shop.findFirst({
     where: {
       id: shopId,
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     },
   });
@@ -147,7 +162,7 @@ const updateShop = async (
   let slug = existingShop.slug;
 
   if (payload.name && payload.name !== existingShop.name) {
-    slug = await generateUniqueShopSlug(user.organizationId, payload.name);
+    slug = await generateUniqueShopSlug(organizationId, payload.name);
   }
 
   const uploadedFile = file as Express.Multer.File & {
@@ -184,10 +199,12 @@ const updateShopStatus = async (
   shopId: string,
   payload: IUpdateShopStatusPayload,
 ) => {
+  const organizationId = ensureOrg(user);
+
   const existingShop = await prisma.shop.findFirst({
     where: {
       id: shopId,
-      organizationId: user.organizationId,
+      organizationId,
       isDeleted: false,
     },
   });
@@ -208,10 +225,109 @@ const updateShopStatus = async (
   return updatedShop;
 };
 
+const deleteShop = async (user: IRequestUser, shopId: string) => {
+  const organizationId = ensureOrg(user);
+
+  const existingShop = await prisma.shop.findFirst({
+    where: {
+      id: shopId,
+      organizationId,
+      isDeleted: false,
+    },
+  });
+
+  if (!existingShop) {
+    throw new AppError(status.NOT_FOUND, "Shop not found");
+  }
+
+  const relatedStorageExists = await prisma.storage.findFirst({
+    where: {
+      shopId: existingShop.id,
+      organizationId,
+      isDeleted: false,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (relatedStorageExists) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot delete shop because it has active storages",
+    );
+  }
+
+  const relatedInventoryExists = await prisma.inventory.findFirst({
+    where: {
+      shopId: existingShop.id,
+      organizationId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (relatedInventoryExists) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot delete shop because inventory exists for this shop",
+    );
+  }
+
+  const relatedSaleExists = await prisma.sale.findFirst({
+    where: {
+      shopId: existingShop.id,
+      organizationId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (relatedSaleExists) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot delete shop because sales already exist for this shop",
+    );
+  }
+
+  const relatedAssignmentExists = await prisma.shopAssignment.findFirst({
+    where: {
+      shopId: existingShop.id,
+      organizationId,
+      isActive: true,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (relatedAssignmentExists) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Cannot delete shop because staff are still assigned to it",
+    );
+  }
+
+  const deletedShop = await prisma.shop.update({
+    where: {
+      id: existingShop.id,
+    },
+    data: {
+      isDeleted: true,
+      deletedAt: new Date(),
+    },
+  });
+
+  return deletedShop;
+};
+
 export const shopService = {
   createShop,
   getAllShops,
   getSingleShop,
   updateShop,
   updateShopStatus,
+  deleteShop,
 };

@@ -56,4 +56,10 @@ router.patch(
   storageController.updateStorageStatus,
 );
 
+router.delete(
+  "/:id",
+  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN, OrgRole.SHOP_ADMIN),
+  storageController.deleteStorage,
+);
+
 export const storageRoutes = router;

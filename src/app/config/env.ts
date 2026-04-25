@@ -17,25 +17,30 @@ interface EnvConfig {
   REFRESH_TOKEN_EXPIRES_IN: string;
   BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: string;
   BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: string;
+
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
   STRIPE_PUBLISHABLE_KEY: string;
+
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
+
   EMAIL_SENDER_SMTP_USER: string;
   EMAIL_SENDER_SMTP_PASS: string;
   EMAIL_SENDER_SMTP_HOST: string;
   EMAIL_SENDER_SMTP_PORT: string;
   EMAIL_SENDER_SMTP_FROM: string;
+
   PLATFORM_SUPER_ADMIN_NAME: string;
   PLATFORM_SUPER_ADMIN_EMAIL: string;
   PLATFORM_SUPER_ADMIN_PASSWORD: string;
+
+  SUBSCRIPTION_BYPASS: string;
 }
 
 const requiredEnvVars = [
   "NODE_ENV",
-  "PORT",
   "DATABASE_URL",
   "FRONTEND_URL",
   "BETTER_AUTH_SECRET",
@@ -73,12 +78,13 @@ const loadEnvVariables = (): EnvConfig => {
 
   return {
     NODE_ENV: process.env.NODE_ENV as string,
-    PORT: Number(process.env.PORT),
+    PORT: Number(process.env.PORT || 5000),
     DATABASE_URL: process.env.DATABASE_URL as string,
     FRONTEND_URL: process.env.FRONTEND_URL as string,
 
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET as string,
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL as string,
+
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET as string,
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET as string,
     ACCESS_TOKEN_EXPIRES_IN: process.env.ACCESS_TOKEN_EXPIRES_IN as string,
@@ -87,22 +93,28 @@ const loadEnvVariables = (): EnvConfig => {
       .BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN as string,
     BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: process.env
       .BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE as string,
+
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY as string,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET as string,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY as string,
+
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME as string,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY as string,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
+
     EMAIL_SENDER_SMTP_USER: process.env.EMAIL_SENDER_SMTP_USER as string,
     EMAIL_SENDER_SMTP_PASS: process.env.EMAIL_SENDER_SMTP_PASS as string,
     EMAIL_SENDER_SMTP_HOST: process.env.EMAIL_SENDER_SMTP_HOST as string,
     EMAIL_SENDER_SMTP_PORT: process.env.EMAIL_SENDER_SMTP_PORT as string,
     EMAIL_SENDER_SMTP_FROM: process.env.EMAIL_SENDER_SMTP_FROM as string,
+
     PLATFORM_SUPER_ADMIN_NAME: process.env.PLATFORM_SUPER_ADMIN_NAME as string,
     PLATFORM_SUPER_ADMIN_EMAIL: process.env
       .PLATFORM_SUPER_ADMIN_EMAIL as string,
     PLATFORM_SUPER_ADMIN_PASSWORD: process.env
       .PLATFORM_SUPER_ADMIN_PASSWORD as string,
+
+    SUBSCRIPTION_BYPASS: process.env.SUBSCRIPTION_BYPASS || "false",
   };
 };
 

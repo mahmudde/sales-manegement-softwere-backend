@@ -40,7 +40,7 @@ router.get(
 
 router.get(
   "/",
-  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
+  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN, OrgRole.STAFF),
   inventoryController.getAllInventory,
 );
 

@@ -34,14 +34,14 @@ router.get(
 );
 
 router.get(
-  "/",
+  "/:id",
   checkAuth(
     OrgRole.ORG_SUPER_ADMIN,
     OrgRole.ORG_ADMIN,
     OrgRole.SHOP_ADMIN,
     OrgRole.STAFF,
   ),
-  productController.getAllProducts,
+  productController.getSingleProduct,
 );
 
 router.patch(
@@ -57,6 +57,12 @@ router.patch(
   checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN),
   validateRequest(updateProductStatusValidationSchema),
   productController.updateProductStatus,
+);
+
+router.delete(
+  "/:id",
+  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN, OrgRole.SHOP_ADMIN),
+  productController.deleteProduct,
 );
 
 export const productRoutes = router;

@@ -9,7 +9,8 @@ import {
   resetPasswordValidationSchema,
 } from "./auth.validation";
 import { validateRequest } from "../../middlewWire/validateRequest";
-import { OrgRole } from "../../../generated/prisma/enums";
+import { OrgRole, PlatformRole } from "../../../generated/prisma/enums";
+import { checkPlatformAuth } from "../../middlewWire/checkPlatformAuth";
 
 const router = Router();
 
@@ -74,6 +75,12 @@ router.post(
   "/reset-password",
   validateRequest(resetPasswordValidationSchema),
   authController.resetPassword,
+);
+
+router.get(
+  "/platform/me",
+  checkPlatformAuth(PlatformRole.PLATFORM_SUPER_ADMIN),
+  authController.getMe,
 );
 
 export const authRoutes = router;

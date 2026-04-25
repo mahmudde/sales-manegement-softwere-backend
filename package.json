@@ -8,8 +8,11 @@
     "dev": "npx tsx watch src/server.ts",
     "generate": "npx prisma generate",
     "migrate": "npx prisma migrate dev",
+    "migrate:deploy": "npx prisma migrate deploy",
     "seed": "npx tsx src/app/seed/seed.ts",
-    "seed:platform-admin": "npx tsx src/app/seed/seed-platform-super-admin.ts"
+    "seed:platform-admin": "npx tsx src/app/seed/seed-platform-super-admin.ts",
+    "build": "npx prisma generate && npx tsc",
+    "vercel-build": "npx prisma generate"
   },
   "keywords": [],
   "author": "",

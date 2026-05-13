@@ -1,112 +1,65 @@
-Sales Management Software – Backend API
+# M ITSales Backend
 
-A scalable, production-ready backend for a multi-tenant Sales Management System (POS + SaaS) built with modern technologies.
-This system supports organizations, staff management, inventory tracking, sales, billing, and subscription-based access control.
+Express, TypeScript, Prisma, PostgreSQL, Better Auth, Stripe, and Cloudinary backend for a multi-tenant sales management and open agency platform.
 
-Features
+## What This Backend Supports
 
-Authentication & Security
-JWT + session-based authentication
-Email verification system
-OTP-based password reset
-Role-based access control (RBAC)
-Secure cookie handling
+- Organization, shop, staff, category, product, storage, inventory, sales, billing, and platform-admin modules.
+- Role-based access for `PLATFORM_SUPER_ADMIN`, `ORG_SUPER_ADMIN`, `ORG_ADMIN`, `SHOP_ADMIN`, and `STAFF`.
+- Public customer interaction APIs for the agency-facing website:
+  - `POST /api/v1/contact`
+  - `POST /api/v1/demo-requests`
+  - `POST /api/v1/newsletter`
+  - `POST /api/v1/support-tickets`
+- Admin customer management APIs:
+  - `GET /api/v1/contact-messages`
+  - `GET /api/v1/demo-requests`
+  - `GET /api/v1/support-tickets`
+- Sales workflow with partial payments, payment history, cancellation, and sale returns.
+- Inventory restoration on sale return and cancellation.
 
-Multi-Tenant Architecture
-Organization-based data isolation
-Multiple roles:
-ORG_SUPER_ADMIN
-ORG_ADMIN
-SHOP_ADMIN
-STAFF
-Organization member management
+## Local Setup
 
-Sales Management (POS Core)
-Create sales with invoice generation
-Inventory deduction on sale
-Discount support
-Payment methods (cash, card, etc.)
-Partial / full payment handling
-Due tracking
+```bash
+npm install
+cp .env.example .env
+npm run generate
+npm run migrate
+npm run seed
+npm run seed:platform-admin
+npm run dev
+```
 
-Payment & Billing (Customer Level)
-Record multiple payments per sale
-Payment history tracking
-Automatic payment status updates:
-PAID
-PARTIAL
-UNPAID
+The API runs at `http://localhost:5000` by default.
 
-Return & Refund System
-Partial and full returns
-Inventory restoration
-Refund calculation
-Payment recalculation after refund
+## Demo Credentials
 
-Sale Cancellation / Void
-Cancel invalid sales
-Restore inventory automatically
-Reset payment state
-Prevent further actions on cancelled sales
+These are the review credentials expected by the frontend demo login buttons.
 
-Inventory Management
-Stock tracking per shop/storage
-Inventory transactions (IN/OUT)
-Low stock monitoring
+```txt
+Platform Admin
+Email: platformadmin@gmail.com
+Password: 12345678
 
-Dashboard Analytics
-Sales overview
-Daily / monthly analytics
-Top selling products
-Low stock alerts
+Organization Admin
+Email: admin@mitsales.demo
+Password: 12345678
 
-Subscription & SaaS Billing
-Subscription plans
-Organization subscriptions
-Payment integration ready (Stripe)
-Subscription enforcement middleware
+Staff
+Email: staff@mitsales.demo
+Password: 12345678
+```
 
-Error Handling
-Centralized global error handler
-Zod validation with structured error responses
-Production-safe error formatting
+Create matching organization admin and staff accounts through your seed data or dashboard before final deployment.
 
-Tech Stack
-Node.js
-Express.js
-TypeScript
-Prisma ORM
-PostgreSQL
-Zod (validation)
-Better Auth (auth/session)
-Stripe (billing)
-Cloudinary (file upload)
+## Important Notes
 
-API Response Format
+- The Prisma generator output is configured to `src/generated/prisma`.
+- Run migrations before using customer interaction or sale return features.
+- Google/Facebook OAuth buttons are visible in the frontend, but real OAuth requires provider keys in the backend auth configuration.
+- Full repo TypeScript currently reports older category/dashboard/staff type issues that predate the agency conversion work. New customer interaction and sale-return files have been checked with targeted scans.
 
-Success:
-{
-"success": true,
-"message": "Success message",
-"data": {}
-}
+## GitHub
 
-Error:
-{
-"success": false,
-"message": "Validation failed",
-"errorSources": [
-{
-"path": "field",
-"message": "Error message"
-}
-]
-}
-
-Future Improvements
-Audit logging system
-Report export (PDF/Excel)
-Notification system (email/SMS)
-Advanced analytics
-Redis caching
-Background job queue
+Backend repository:
+https://github.com/mahmudde/sales-manegement-softwere-backend.git

@@ -48,10 +48,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/api/v1", indexRoutes);
-app.use(notFound);
-app.use(globalErrorHandler);
 
 // Basic route
 app.get("/", (req: Request, res: Response) => {
+  const oauthError = typeof req.query.error === "string" ? req.query.error : "";
+
+  if (oauthError) {
+    const redirectUrl = new URL("/login", envVars.FRONTEND_URL);
+    redirectUrl.searchParams.set("error", oauthError);
+    return res.redirect(302, redirectUrl.toString());
+  }
+
   res.send("Hello, TypeScript + Express!");
 });
+
+app.use(notFound);
+app.use(globalErrorHandler);

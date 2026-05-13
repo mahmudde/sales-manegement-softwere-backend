@@ -37,7 +37,6 @@ interface EnvConfig {
 
 const requiredEnvVars = [
   "NODE_ENV",
-  "PORT",
   "DATABASE_URL",
   "FRONTEND_URL",
   "BETTER_AUTH_SECRET",
@@ -77,7 +76,7 @@ const loadEnvVariables = (): EnvConfig => {
 
   return {
     NODE_ENV: process.env.NODE_ENV as string,
-    PORT: Number(process.env.PORT),
+    PORT: Number(process.env.PORT ?? 5000),
     DATABASE_URL: process.env.DATABASE_URL as string,
     FRONTEND_URL: process.env.FRONTEND_URL as string,
 

@@ -11,6 +11,7 @@ import { saleRoutes } from "../modules/sale/sale.route";
 import { billingRoutes } from "../modules/billing/billing.route";
 import { dashboardRoutes } from "../modules/dashboard/dashboard.route";
 import { platformRoutes } from "../modules/platform/platform.route";
+import { customerInteractionRoutes } from "../modules/customer-interaction/customer-interaction.route";
 
 const router = Router();
 
@@ -26,5 +27,6 @@ router.use("/sales", saleRoutes);
 router.use("/billing", billingRoutes);
 router.use("/dashboard", dashboardRoutes);
 router.use("/platform", platformRoutes);
+router.use("/", customerInteractionRoutes);
 
 export const indexRoutes = router;

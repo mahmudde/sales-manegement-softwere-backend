@@ -27,6 +27,7 @@ model Organization {
   shopAssignments     ShopAssignment[]
   auditLogs           AuditLog[]
   returns             SaleReturn[]
+  supportTickets      SupportTicket[]
 }
 
 model OrganizationMember {

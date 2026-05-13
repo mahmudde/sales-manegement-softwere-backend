@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.ts"
-import type * as Prisma from "../internal/prismaNamespace.ts"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Organization
@@ -260,6 +260,7 @@ export type OrganizationWhereInput = {
   shopAssignments?: Prisma.ShopAssignmentListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   returns?: Prisma.SaleReturnListRelationFilter
+  supportTickets?: Prisma.SupportTicketListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -290,6 +291,7 @@ export type OrganizationOrderByWithRelationInput = {
   shopAssignments?: Prisma.ShopAssignmentOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
   returns?: Prisma.SaleReturnOrderByRelationAggregateInput
+  supportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -323,6 +325,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   shopAssignments?: Prisma.ShopAssignmentListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   returns?: Prisma.SaleReturnListRelationFilter
+  supportTickets?: Prisma.SupportTicketListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -391,6 +394,7 @@ export type OrganizationCreateInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -421,6 +425,7 @@ export type OrganizationUncheckedCreateInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -451,6 +456,7 @@ export type OrganizationUpdateInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -481,6 +487,7 @@ export type OrganizationUncheckedUpdateInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -677,6 +684,22 @@ export type OrganizationUpdateOneRequiredWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutProductsInput, Prisma.OrganizationUpdateWithoutProductsInput>, Prisma.OrganizationUncheckedUpdateWithoutProductsInput>
 }
 
+export type OrganizationCreateNestedOneWithoutSupportTicketsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutSupportTicketsInput, Prisma.OrganizationUncheckedCreateWithoutSupportTicketsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutSupportTicketsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneWithoutSupportTicketsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutSupportTicketsInput, Prisma.OrganizationUncheckedCreateWithoutSupportTicketsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutSupportTicketsInput
+  upsert?: Prisma.OrganizationUpsertWithoutSupportTicketsInput
+  disconnect?: Prisma.OrganizationWhereInput | boolean
+  delete?: Prisma.OrganizationWhereInput | boolean
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutSupportTicketsInput, Prisma.OrganizationUpdateWithoutSupportTicketsInput>, Prisma.OrganizationUncheckedUpdateWithoutSupportTicketsInput>
+}
+
 export type OrganizationCreateNestedOneWithoutStoragesInput = {
   create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStoragesInput, Prisma.OrganizationUncheckedCreateWithoutStoragesInput>
   connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStoragesInput
@@ -820,6 +843,7 @@ export type OrganizationCreateWithoutAuditLogsInput = {
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAuditLogsInput = {
@@ -849,6 +873,7 @@ export type OrganizationUncheckedCreateWithoutAuditLogsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAuditLogsInput = {
@@ -894,6 +919,7 @@ export type OrganizationUpdateWithoutAuditLogsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAuditLogsInput = {
@@ -923,6 +949,7 @@ export type OrganizationUncheckedUpdateWithoutAuditLogsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutBillingPlansInput = {
@@ -952,6 +979,7 @@ export type OrganizationCreateWithoutBillingPlansInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutBillingPlansInput = {
@@ -981,6 +1009,7 @@ export type OrganizationUncheckedCreateWithoutBillingPlansInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutBillingPlansInput = {
@@ -1026,6 +1055,7 @@ export type OrganizationUpdateWithoutBillingPlansInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutBillingPlansInput = {
@@ -1055,6 +1085,7 @@ export type OrganizationUncheckedUpdateWithoutBillingPlansInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSubscriptionsInput = {
@@ -1084,6 +1115,7 @@ export type OrganizationCreateWithoutSubscriptionsInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSubscriptionsInput = {
@@ -1113,6 +1145,7 @@ export type OrganizationUncheckedCreateWithoutSubscriptionsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSubscriptionsInput = {
@@ -1158,6 +1191,7 @@ export type OrganizationUpdateWithoutSubscriptionsInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSubscriptionsInput = {
@@ -1187,6 +1221,7 @@ export type OrganizationUncheckedUpdateWithoutSubscriptionsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPaymentTransactionsInput = {
@@ -1216,6 +1251,7 @@ export type OrganizationCreateWithoutPaymentTransactionsInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPaymentTransactionsInput = {
@@ -1245,6 +1281,7 @@ export type OrganizationUncheckedCreateWithoutPaymentTransactionsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPaymentTransactionsInput = {
@@ -1290,6 +1327,7 @@ export type OrganizationUpdateWithoutPaymentTransactionsInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPaymentTransactionsInput = {
@@ -1319,6 +1357,7 @@ export type OrganizationUncheckedUpdateWithoutPaymentTransactionsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCategoriesInput = {
@@ -1348,6 +1387,7 @@ export type OrganizationCreateWithoutCategoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCategoriesInput = {
@@ -1377,6 +1417,7 @@ export type OrganizationUncheckedCreateWithoutCategoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCategoriesInput = {
@@ -1422,6 +1463,7 @@ export type OrganizationUpdateWithoutCategoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
@@ -1451,6 +1493,7 @@ export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutProductsInput = {
@@ -1480,6 +1523,7 @@ export type OrganizationCreateWithoutProductsInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutProductsInput = {
@@ -1509,6 +1553,7 @@ export type OrganizationUncheckedCreateWithoutProductsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutProductsInput = {
@@ -1554,6 +1599,7 @@ export type OrganizationUpdateWithoutProductsInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutProductsInput = {
@@ -1573,6 +1619,143 @@ export type OrganizationUncheckedUpdateWithoutProductsInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
+  storages?: Prisma.StorageUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventories?: Prisma.InventoryUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutOrganizationNestedInput
+  billingPlans?: Prisma.BillingPlanUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscriptions?: Prisma.OrganizationSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutSupportTicketsInput = {
+  id?: string
+  name: string
+  slug: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.OrganizationStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  suspendedAt?: Date | string | null
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  shops?: Prisma.ShopCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
+  storages?: Prisma.StorageCreateNestedManyWithoutOrganizationInput
+  inventories?: Prisma.InventoryCreateNestedManyWithoutOrganizationInput
+  inventoryTxns?: Prisma.InventoryTransactionCreateNestedManyWithoutOrganizationInput
+  sales?: Prisma.SaleCreateNestedManyWithoutOrganizationInput
+  billingPlans?: Prisma.BillingPlanCreateNestedManyWithoutOrganizationInput
+  subscriptions?: Prisma.OrganizationSubscriptionCreateNestedManyWithoutOrganizationInput
+  paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
+  shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
+  returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutSupportTicketsInput = {
+  id?: string
+  name: string
+  slug: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.OrganizationStatus
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  suspendedAt?: Date | string | null
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  shops?: Prisma.ShopUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
+  storages?: Prisma.StorageUncheckedCreateNestedManyWithoutOrganizationInput
+  inventories?: Prisma.InventoryUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryTxns?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutOrganizationInput
+  billingPlans?: Prisma.BillingPlanUncheckedCreateNestedManyWithoutOrganizationInput
+  subscriptions?: Prisma.OrganizationSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
+  paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutSupportTicketsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutSupportTicketsInput, Prisma.OrganizationUncheckedCreateWithoutSupportTicketsInput>
+}
+
+export type OrganizationUpsertWithoutSupportTicketsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutSupportTicketsInput, Prisma.OrganizationUncheckedUpdateWithoutSupportTicketsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutSupportTicketsInput, Prisma.OrganizationUncheckedCreateWithoutSupportTicketsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutSupportTicketsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutSupportTicketsInput, Prisma.OrganizationUncheckedUpdateWithoutSupportTicketsInput>
+}
+
+export type OrganizationUpdateWithoutSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  shops?: Prisma.ShopUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
+  storages?: Prisma.StorageUpdateManyWithoutOrganizationNestedInput
+  inventories?: Prisma.InventoryUpdateManyWithoutOrganizationNestedInput
+  inventoryTxns?: Prisma.InventoryTransactionUpdateManyWithoutOrganizationNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutOrganizationNestedInput
+  billingPlans?: Prisma.BillingPlanUpdateManyWithoutOrganizationNestedInput
+  subscriptions?: Prisma.OrganizationSubscriptionUpdateManyWithoutOrganizationNestedInput
+  paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
+  shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
+  returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  shops?: Prisma.ShopUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
   storages?: Prisma.StorageUncheckedUpdateManyWithoutOrganizationNestedInput
   inventories?: Prisma.InventoryUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryTxns?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1612,6 +1795,7 @@ export type OrganizationCreateWithoutStoragesInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutStoragesInput = {
@@ -1641,6 +1825,7 @@ export type OrganizationUncheckedCreateWithoutStoragesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutStoragesInput = {
@@ -1686,6 +1871,7 @@ export type OrganizationUpdateWithoutStoragesInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutStoragesInput = {
@@ -1715,6 +1901,7 @@ export type OrganizationUncheckedUpdateWithoutStoragesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInventoriesInput = {
@@ -1744,6 +1931,7 @@ export type OrganizationCreateWithoutInventoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInventoriesInput = {
@@ -1773,6 +1961,7 @@ export type OrganizationUncheckedCreateWithoutInventoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInventoriesInput = {
@@ -1818,6 +2007,7 @@ export type OrganizationUpdateWithoutInventoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInventoriesInput = {
@@ -1847,6 +2037,7 @@ export type OrganizationUncheckedUpdateWithoutInventoriesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInventoryTxnsInput = {
@@ -1876,6 +2067,7 @@ export type OrganizationCreateWithoutInventoryTxnsInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInventoryTxnsInput = {
@@ -1905,6 +2097,7 @@ export type OrganizationUncheckedCreateWithoutInventoryTxnsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInventoryTxnsInput = {
@@ -1950,6 +2143,7 @@ export type OrganizationUpdateWithoutInventoryTxnsInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInventoryTxnsInput = {
@@ -1979,6 +2173,7 @@ export type OrganizationUncheckedUpdateWithoutInventoryTxnsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutMembersInput = {
@@ -2008,6 +2203,7 @@ export type OrganizationCreateWithoutMembersInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -2037,6 +2233,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -2082,6 +2279,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -2111,6 +2309,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutReturnsInput = {
@@ -2140,6 +2339,7 @@ export type OrganizationCreateWithoutReturnsInput = {
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutReturnsInput = {
@@ -2169,6 +2369,7 @@ export type OrganizationUncheckedCreateWithoutReturnsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutReturnsInput = {
@@ -2214,6 +2415,7 @@ export type OrganizationUpdateWithoutReturnsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutReturnsInput = {
@@ -2243,6 +2445,7 @@ export type OrganizationUncheckedUpdateWithoutReturnsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSalesInput = {
@@ -2272,6 +2475,7 @@ export type OrganizationCreateWithoutSalesInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSalesInput = {
@@ -2301,6 +2505,7 @@ export type OrganizationUncheckedCreateWithoutSalesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSalesInput = {
@@ -2346,6 +2551,7 @@ export type OrganizationUpdateWithoutSalesInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSalesInput = {
@@ -2375,6 +2581,7 @@ export type OrganizationUncheckedUpdateWithoutSalesInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutShopsInput = {
@@ -2404,6 +2611,7 @@ export type OrganizationCreateWithoutShopsInput = {
   shopAssignments?: Prisma.ShopAssignmentCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutShopsInput = {
@@ -2433,6 +2641,7 @@ export type OrganizationUncheckedCreateWithoutShopsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutShopsInput = {
@@ -2478,6 +2687,7 @@ export type OrganizationUpdateWithoutShopsInput = {
   shopAssignments?: Prisma.ShopAssignmentUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutShopsInput = {
@@ -2507,6 +2717,7 @@ export type OrganizationUncheckedUpdateWithoutShopsInput = {
   shopAssignments?: Prisma.ShopAssignmentUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutShopAssignmentsInput = {
@@ -2536,6 +2747,7 @@ export type OrganizationCreateWithoutShopAssignmentsInput = {
   paymentTransactions?: Prisma.PaymentTransactionCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutShopAssignmentsInput = {
@@ -2565,6 +2777,7 @@ export type OrganizationUncheckedCreateWithoutShopAssignmentsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutOrganizationInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   returns?: Prisma.SaleReturnUncheckedCreateNestedManyWithoutOrganizationInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutShopAssignmentsInput = {
@@ -2610,6 +2823,7 @@ export type OrganizationUpdateWithoutShopAssignmentsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutShopAssignmentsInput = {
@@ -2639,6 +2853,7 @@ export type OrganizationUncheckedUpdateWithoutShopAssignmentsInput = {
   paymentTransactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   returns?: Prisma.SaleReturnUncheckedUpdateManyWithoutOrganizationNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -2661,6 +2876,7 @@ export type OrganizationCountOutputType = {
   shopAssignments: number
   auditLogs: number
   returns: number
+  supportTickets: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2678,6 +2894,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   shopAssignments?: boolean | OrganizationCountOutputTypeCountShopAssignmentsArgs
   auditLogs?: boolean | OrganizationCountOutputTypeCountAuditLogsArgs
   returns?: boolean | OrganizationCountOutputTypeCountReturnsArgs
+  supportTickets?: boolean | OrganizationCountOutputTypeCountSupportTicketsArgs
 }
 
 /**
@@ -2788,6 +3005,13 @@ export type OrganizationCountOutputTypeCountReturnsArgs<ExtArgs extends runtime.
   where?: Prisma.SaleReturnWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountSupportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportTicketWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2817,6 +3041,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   shopAssignments?: boolean | Prisma.Organization$shopAssignmentsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.Organization$auditLogsArgs<ExtArgs>
   returns?: boolean | Prisma.Organization$returnsArgs<ExtArgs>
+  supportTickets?: boolean | Prisma.Organization$supportTicketsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -2884,6 +3109,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   shopAssignments?: boolean | Prisma.Organization$shopAssignmentsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.Organization$auditLogsArgs<ExtArgs>
   returns?: boolean | Prisma.Organization$returnsArgs<ExtArgs>
+  supportTickets?: boolean | Prisma.Organization$supportTicketsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2906,6 +3132,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     shopAssignments: Prisma.$ShopAssignmentPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     returns: Prisma.$SaleReturnPayload<ExtArgs>[]
+    supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3329,6 +3556,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   shopAssignments<T extends Prisma.Organization$shopAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$shopAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShopAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.Organization$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   returns<T extends Prisma.Organization$returnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$returnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supportTickets<T extends Prisma.Organization$supportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4097,6 +4325,30 @@ export type Organization$returnsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.SaleReturnScalarFieldEnum | Prisma.SaleReturnScalarFieldEnum[]
+}
+
+/**
+ * Organization.supportTickets
+ */
+export type Organization$supportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportTicket
+   */
+  select?: Prisma.SupportTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportTicket
+   */
+  omit?: Prisma.SupportTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportTicketInclude<ExtArgs> | null
+  where?: Prisma.SupportTicketWhereInput
+  orderBy?: Prisma.SupportTicketOrderByWithRelationInput | Prisma.SupportTicketOrderByWithRelationInput[]
+  cursor?: Prisma.SupportTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportTicketScalarFieldEnum | Prisma.SupportTicketScalarFieldEnum[]
 }
 
 /**

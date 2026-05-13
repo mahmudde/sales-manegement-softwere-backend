@@ -10,12 +10,23 @@ import { sendEmail } from "../utils/sendEmail";
 export const auth = betterAuth({
   baseURL: envVars.BETTER_AUTH_URL,
   secret: envVars.BETTER_AUTH_SECRET,
+  socialProviders: {
+    google: {
+      clientId: envVars.GOOGLE_CLIENT_ID,
+      clientSecret: envVars.GOOGLE_CLIENT_SECRET,
+    },
+  },
 
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
 
-  trustedOrigins: ["http://localhost:3000", "http://localhost:5000"],
+  trustedOrigins: [
+    envVars.FRONTEND_URL,
+    envVars.BETTER_AUTH_URL,
+    "http://localhost:3000",
+    "http://localhost:5000",
+  ],
 
   emailAndPassword: {
     enabled: true,

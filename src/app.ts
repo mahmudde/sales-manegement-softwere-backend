@@ -54,9 +54,24 @@ app.get("/", (req: Request, res: Response) => {
   const oauthError = typeof req.query.error === "string" ? req.query.error : "";
 
   if (oauthError) {
-    const redirectUrl = new URL("/login", envVars.FRONTEND_URL);
-    redirectUrl.searchParams.set("error", oauthError);
-    return res.redirect(302, redirectUrl.toString());
+    const rawFrontendUrl =
+      envVars.FRONTEND_URL || "https://sales-manegement-softwere-frontend.vercel.app";
+
+    try {
+      const normalizedBase = rawFrontendUrl.startsWith("http")
+        ? rawFrontendUrl
+        : `https://${rawFrontendUrl}`;
+      const redirectUrl = new URL("/login", normalizedBase);
+      redirectUrl.searchParams.set("error", oauthError);
+      return res.redirect(302, redirectUrl.toString());
+    } catch {
+      const fallbackUrl = new URL(
+        "/login",
+        "https://sales-manegement-softwere-frontend.vercel.app",
+      );
+      fallbackUrl.searchParams.set("error", oauthError);
+      return res.redirect(302, fallbackUrl.toString());
+    }
   }
 
   res.send("Hello, TypeScript + Express!");

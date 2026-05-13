@@ -7481,6 +7481,41 @@ app.post(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/v1", indexRoutes);
+app.get("/auth/google/start", (req, res) => {
+  const callbackURL = typeof req.query.callbackURL === "string" && req.query.callbackURL ? req.query.callbackURL : `${envVars.FRONTEND_URL}/dashboard`;
+  const errorCallbackURL = typeof req.query.errorCallbackURL === "string" && req.query.errorCallbackURL ? req.query.errorCallbackURL : `${envVars.FRONTEND_URL}/login`;
+  const html = `<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Redirecting to Google</title></head>
+  <body>
+    <script>
+      (async function () {
+        try {
+          const response = await fetch("/api/auth/sign-in/social", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              provider: "google",
+              callbackURL: ${JSON.stringify(callbackURL)},
+              errorCallbackURL: ${JSON.stringify(errorCallbackURL)}
+            })
+          });
+          const data = await response.json();
+          if (!response.ok || !data.url) {
+            window.location.href = ${JSON.stringify(`${envVars.FRONTEND_URL}/login`)};
+            return;
+          }
+          window.location.href = data.url;
+        } catch (err) {
+          window.location.href = ${JSON.stringify(`${envVars.FRONTEND_URL}/login`)};
+        }
+      })();
+    </script>
+  </body>
+</html>`;
+  res.status(200).type("html").send(html);
+});
 app.get("/", (req, res) => {
   const oauthError = typeof req.query.error === "string" ? req.query.error : "";
   if (oauthError) {

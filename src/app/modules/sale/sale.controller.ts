@@ -94,6 +94,46 @@ const getSalePayments = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const createSaleReturn = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+  const result = await saleService.createSaleReturn(
+    user,
+    id as string,
+    req.body,
+  );
+
+  sendResponse(res, {
+    httpStatusCode: status.CREATED,
+    success: true,
+    message: "Sale return created successfully",
+    data: result,
+  });
+});
+
+const getSaleReturns = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const { id } = req.params;
+  const result = await saleService.getSaleReturns(user, id as string);
+
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "Sale returns fetched successfully",
+    data: result,
+  });
+});
+
 const cancelSale = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
 
@@ -114,6 +154,8 @@ const cancelSale = catchAsync(async (req: Request, res: Response) => {
 
 export const saleController = {
   createSale,
+  createSaleReturn,
+  getSaleReturns,
   addSalePayment,
   getSalePayments,
   getAllSales,

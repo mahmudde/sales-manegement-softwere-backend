@@ -5,6 +5,7 @@ import {
   addSalePaymentValidationSchema,
   cancelSaleValidationSchema,
   createSaleValidationSchema,
+  createSaleReturnValidationSchema,
 } from "./sale.validation";
 import { OrgRole } from "../../../generated/prisma/enums";
 import { validateRequest } from "../../middlewWire/validateRequest";
@@ -61,6 +62,24 @@ router.get(
     OrgRole.STAFF,
   ),
   saleController.getSalePayments,
+);
+
+router.post(
+  "/:id/returns",
+  checkAuth(OrgRole.ORG_SUPER_ADMIN, OrgRole.ORG_ADMIN, OrgRole.SHOP_ADMIN),
+  validateRequest(createSaleReturnValidationSchema),
+  saleController.createSaleReturn,
+);
+
+router.get(
+  "/:id/returns",
+  checkAuth(
+    OrgRole.ORG_SUPER_ADMIN,
+    OrgRole.ORG_ADMIN,
+    OrgRole.SHOP_ADMIN,
+    OrgRole.STAFF,
+  ),
+  saleController.getSaleReturns,
 );
 
 router.patch(

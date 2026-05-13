@@ -7481,11 +7481,19 @@ app.post(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/v1", indexRoutes);
-app.use(notFound);
-app.use(globalErrorHandler);
 app.get("/", (req, res) => {
+  const oauthError = typeof req.query.error === "string" ? req.query.error : "";
+  if (oauthError) {
+    const frontendUrl = envVars.FRONTEND_URL || "https://sales-manegement-softwere-frontend.vercel.app";
+    const normalizedBase = frontendUrl.startsWith("http") ? frontendUrl : `https://${frontendUrl}`;
+    const redirectUrl = new URL("/login", normalizedBase);
+    redirectUrl.searchParams.set("error", oauthError);
+    return res.redirect(302, redirectUrl.toString());
+  }
   res.send("Hello, TypeScript + Express!");
 });
+app.use(notFound);
+app.use(globalErrorHandler);
 
 // api/index.ts
 var index_default = app;
